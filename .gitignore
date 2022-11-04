@@ -1,0 +1,4 @@
+.cph/
+*.exe
+*test.cpp
+*demo.cpp

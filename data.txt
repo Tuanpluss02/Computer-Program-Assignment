@@ -1,0 +1,4 @@
+ID          Name               Email                 Phone                 Bill
+1           Do Ngoc Tuan       Tuan@gmail.com        01907329432           450.000 VND
+2           Tran Nam Phong     phong@gmail.com       09304062842           647.757 VND
+
