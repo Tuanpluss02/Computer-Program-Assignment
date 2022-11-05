@@ -71,3 +71,38 @@ string Customer::getPhone()
 {
     return phone;
 }
+
+bool isValidEmail(string email)
+{
+    regex pattern("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
+    return regex_match(email, pattern);
+}
+
+bool isValidID(string ID)
+{
+    regex pattern("[0-9]+");
+    return regex_match(ID, pattern);
+}
+
+Customer Customer::searchCustomer(string token)
+{
+    string regexToken = ".*" + token + ".*";
+    regex pattern(regexToken);
+    if (regex_match(ID, pattern) || regex_match(name, pattern) || regex_match(email, pattern) || regex_match(phone, pattern) || regex_match(bill, pattern))
+    {
+        return *this;
+    }
+    else
+    {
+        return Customer();
+    }
+}
+void Customer::printCustomer()
+{
+    cout << "ID: " << ID << endl;
+    cout << "Name: " << name << endl;
+    cout << "Email: " << email << endl;
+    cout << "Phone: " << phone << endl;
+    cout << "Bill: " << bill << endl;
+    cout << endl;
+}

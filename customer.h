@@ -1,7 +1,15 @@
 #ifndef _CUSTOMER_H_
 #define _CUSTOMER_H_
 
+#include <iostream>
 #include <string>
+#include <vector>
+#include <fstream>
+#include <sstream>
+#include <deque>
+#include <regex>
+
+#define FILE_PATH "E:\\CODE\\Cpp\\Computer-Program-Assignment\\data.txt"
 
 using namespace std;
 
@@ -15,19 +23,24 @@ private:
     string phone;
 
 public:
-    Customer();
-    Customer(string ID, string name, string email, string phone, string bill);
-    ~Customer();
-    void setID(string ID);
-    void setName(string name);
-    void setEmail(string email);
-    void setBill(string bill);
-    void setPhone(string phone);
-    string getID();
-    string getName();
-    string getEmail();
-    string getBill();
-    string getPhone();
+    Customer();                                                                // default constructor
+    Customer(string ID, string name, string email, string phone, string bill); // constructor with parameters
+    ~Customer();                                                               // destructor
+    void setID(string ID);                                                     // set ID
+    void setName(string name);                                                 // set name
+    void setEmail(string email);                                               // set email
+    void setBill(string bill);                                                 // set bill
+    void setPhone(string phone);                                               // set phone
+    string getID();                                                            // get ID
+    string getName();                                                          // get name
+    string getEmail();                                                         // get email
+    string getBill();                                                          // get bill
+    string getPhone();                                                         // get phone
+    Customer searchCustomer(string token);
+    void printCustomer();
 };
+
+bool isValidEmail(string email); // check if email is valid
+bool isValidID(string ID);       // check if ID is valid
 
 #endif // CUSTOMER_H
