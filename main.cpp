@@ -2,25 +2,31 @@
 
 vector<Customer> customers;
 
-void readData(string path);
+void readData1(string fileName);
 
 int main()
 {
-    readData(FILE_PATH);
-    system("pause");
+    readData();
+    quickSort(customers, 0, customers.size() - 1, 2, true);
+    for (auto customer : customers)
+    {
+        customer.printCustomer();
+    }
+    // system("pause");
     return 0;
 }
 
-void readData(string path = FILE_PATH)
+void readData(string fileName = FILE_PATH)
 {
-    ifstream input(path);
+    ifstream input(fileName);
     if (!input.is_open())
     {
         cout << "Error opening file" << endl;
         return;
     }
     string ID, name, email, phone, bill, temp;
-    deque<string> rawData;
+    map<size_t, string> rawData;
+    size_t index = 1;
     getline(input, temp);
     while (getline(input, temp) && temp != "")
     {
@@ -28,25 +34,20 @@ void readData(string path = FILE_PATH)
         string word;
         while (splitData >> word)
         {
-            rawData.push_back(word);
+            rawData[index++] = word;
         }
-        ID = rawData.front();
-        rawData.pop_front();
-        bill = rawData.back();
-        rawData.pop_back();
-        bill = rawData.back() + " " + bill;
-        rawData.pop_back();
-        phone = rawData.back();
-        rawData.pop_back();
-        email = rawData.back();
+        ID = rawData[1];
+        bill = rawData[index - 2] + " " + rawData[index - 1];
+        phone = rawData[index - 3];
+        email = rawData[index - 4];
         name = "";
-        while (!rawData.empty())
+        for (size_t i = 2; i < index - 4; i++)
         {
-            name += rawData.front() + " ";
-            rawData.pop_front();
+            name += rawData[i] + " ";
         }
         name.pop_back();
         customers.push_back(Customer(ID, name, email, phone, bill));
+        index = 1;
     }
     input.close();
 }

@@ -36,11 +36,14 @@ public:
     string getEmail();                                                         // get email
     string getBill();                                                          // get bill
     string getPhone();                                                         // get phone
-    Customer searchCustomer(string token);
     void printCustomer();
 };
 
-bool isValidEmail(string email); // check if email is valid
-bool isValidID(string ID);       // check if ID is valid
+bool isValidEmail(string email);                                                          // check if email is valid
+bool isValidID(string ID);                                                                // check if ID is valid
+void quickSort(vector<Customer> &customers, int left, int, int option, bool isAscending); // quick sort
+int partitionAsccending(vector<Customer> &customers, int left, int right, int option);
+int partitionDescending(vector<Customer> &customers, int left, int right, int option);
+Customer searchCustomer(string token);
 
 #endif // CUSTOMER_H
