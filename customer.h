@@ -39,11 +39,12 @@ public:
     void printCustomer();
 };
 
+unsigned long long billToNumber(string str);
 bool isValidEmail(string email);                                                          // check if email is valid
 bool isValidID(string ID);                                                                // check if ID is valid
 void quickSort(vector<Customer> &customers, int left, int, int option, bool isAscending); // quick sort
 int partitionAsccending(vector<Customer> &customers, int left, int right, int option);
 int partitionDescending(vector<Customer> &customers, int left, int right, int option);
-Customer searchCustomer(string token);
+long searchCustomer(vector<Customer> customers, string token);
 
 #endif // CUSTOMER_H

@@ -2,21 +2,30 @@
 
 vector<Customer> customers;
 
-void readData1(string fileName);
+void readData(string fileName);
 
 int main()
 {
-    readData();
-    quickSort(customers, 0, customers.size() - 1, 2, true);
-    for (auto customer : customers)
+    readData(FILE_PATH);
+    // quickSort(customers, 0, customers.size() - 1, 1, false); //done
+    long i = searchCustomer(customers, "5");
+    if (i != -1)
     {
-        customer.printCustomer();
+        customers[i].printCustomer();
     }
+    else
+    {
+        cout << "Not found" << endl;
+    }
+    // for (auto customer : customers)
+    // {
+    //     customer.printCustomer();
+    // }
     // system("pause");
     return 0;
 }
 
-void readData(string fileName = FILE_PATH)
+void readData(string fileName)
 {
     ifstream input(fileName);
     if (!input.is_open())

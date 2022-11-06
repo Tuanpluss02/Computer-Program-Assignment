@@ -84,7 +84,7 @@ bool isValidID(string ID)
     return regex_match(ID, pattern);
 }
 
-Customer searchCustomer(vector<Customer> customers, string token)
+long searchCustomer(vector<Customer> customers, string token)
 {
     string regexToken = ".*" + token + ".*";
     regex pattern(regexToken);
@@ -92,10 +92,10 @@ Customer searchCustomer(vector<Customer> customers, string token)
     {
         if (regex_match(customers[i].getID(), pattern) || regex_match(customers[i].getName(), pattern) || regex_match(customers[i].getEmail(), pattern) || regex_match(customers[i].getPhone(), pattern) || regex_match(customers[i].getBill(), pattern))
         {
-            return customers[i];
+            return i;
         }
     }
-    throw "Customer not found";
+    return -1;
 }
 
 void Customer::printCustomer()
@@ -155,7 +155,7 @@ int partitionAsccending(vector<Customer> &customers, int left, int right, int op
             }
             break;
         case 5:
-            if (customers[j].getBill() < pivot.getBill())
+            if (billToNumber(customers[j].getBill()) < billToNumber(pivot.getBill()))
             {
                 i++;
                 swap(customers[i], customers[j]);
@@ -204,7 +204,7 @@ int partitionDescending(vector<Customer> &customers, int left, int right, int op
             }
             break;
         case 5:
-            if (customers[j].getBill() > pivot.getBill())
+            if (billToNumber(customers[j].getBill()) > billToNumber(pivot.getBill()))
             {
                 i++;
                 swap(customers[i], customers[j]);
@@ -214,4 +214,17 @@ int partitionDescending(vector<Customer> &customers, int left, int right, int op
     }
     swap(customers[i + 1], customers[right]);
     return i + 1;
+}
+
+unsigned long long billToNumber(string str)
+{
+    unsigned long long result = 0;
+    for (int i = 0; i < str.length(); i++)
+    {
+        if (str[i] >= '0' && str[i] <= '9')
+        {
+            result = result * 10 + (str[i] - '0');
+        }
+    }
+    return result;
 }
