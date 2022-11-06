@@ -24,27 +24,34 @@ private:
     string email;
     string bill;
     string phone;
+    string gender;
+    string address;
 
 public:
-    Customer();                                                                // default constructor
-    Customer(string ID, string name, string email, string phone, string bill); // constructor with parameters
-    ~Customer();                                                               // destructor
-    void setID(string ID);                                                     // set ID
-    void setName(string name);                                                 // set name
-    void setEmail(string email);                                               // set email
-    void setBill(string bill);                                                 // set bill
-    void setPhone(string phone);                                               // set phone
-    string getID();                                                            // get ID
-    string getName();                                                          // get name
-    string getEmail();                                                         // get email
-    string getBill();                                                          // get bill
-    string getPhone();                                                         // get phone
+    Customer();                                                                                               // default constructor
+    Customer(string ID, string name, string email, string phone, string bill, string gender, string address); // constructor with parameters
+    ~Customer();                                                                                              // destructor
+    void setID(string ID);                                                                                    // set ID
+    void setName(string name);                                                                                // set name
+    void setEmail(string email);                                                                              // set email
+    void setBill(string bill);                                                                                // set bill
+    void setPhone(string phone);                                                                              // set phone
+    void setGender(string gender);
+    void setAddress(string address);
+    string getID();    // get ID
+    string getName();  // get name
+    string getEmail(); // get email
+    string getBill();  // get bill
+    string getPhone(); // get phone
+    string getGender();
+    string getAddress();
     void printCustomer();
 };
 
 unsigned long long stringToNumber(string str);
 bool isValidEmail(string email);                                                          // check if email is valid
 bool isValidID(string ID);                                                                // check if ID is valid
+bool isValidPhone(string phone);                                                          // check if phone is valid
 void quickSort(vector<Customer> &customers, int left, int, int option, bool isAscending); // quick sort
 int partitionAsccending(vector<Customer> &customers, int left, int right, int option);
 int partitionDescending(vector<Customer> &customers, int left, int right, int option);
@@ -54,8 +61,7 @@ long searchCustomerBinarySearch(vector<Customer> customers, size_t ID);    // se
 void printAllCustomer(vector<Customer> customers);
 
 void deleteCustomer(vector<Customer> &customers, string ID);
-void addCustomer(vector<Customer> &customers, string ID, string name, string email, string phone, string bill);
-void updateCustomer(vector<Customer> &customers, string ID, string name, string email, string phone, string bill);
-void saveData(vector<Customer> customers);
+void addCustomer(vector<Customer> &customers, Customer customer);
+void updateCustomer(vector<Customer> &customers, string ID);
 
 #endif // CUSTOMER_H
