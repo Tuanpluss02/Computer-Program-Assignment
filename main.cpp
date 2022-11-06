@@ -1,5 +1,5 @@
 #include "customer.cpp"
-
+#include "menu.hpp"
 vector<Customer> customers;
 
 void readData(string fileName);
@@ -7,21 +7,10 @@ void readData(string fileName);
 int main()
 {
     readData(FILE_PATH);
-    // quickSort(customers, 0, customers.size() - 1, 1, false); //done
-    long i = searchCustomer(customers, "5");
-    if (i != -1)
-    {
-        customers[i].printCustomer();
-    }
-    else
-    {
-        cout << "Not found" << endl;
-    }
-    // for (auto customer : customers)
-    // {
-    //     customer.printCustomer();
-    // }
-    // system("pause");
+    mainMenu();
+    searchMenu();
+    sortMenu();
+    system("pause");
     return 0;
 }
 
