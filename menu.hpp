@@ -28,6 +28,7 @@ void mainMenu()
             cout << "Invalid choice! Please enter again!" << endl;
         }
     } while (choice < 1 || choice > 7);
+    CLEAR_SCREEN;
     switch (choice)
     {
     case 1:
@@ -84,6 +85,7 @@ void subSortMenu(int choice1)
         if (choice2 > 3 || choice2 < 1)
             cout << "Invalid choice! Please try again!" << endl;
     } while (choice2 > 3 || choice2 < 1);
+    CLEAR_SCREEN;
     switch (choice2)
     {
     case 1:
@@ -117,6 +119,7 @@ void afterSort()
         if (choice > 4 || choice < 1)
             cout << "Invalid choice! Please try again!" << endl;
     } while (choice > 4 || choice < 1);
+    CLEAR_SCREEN;
     switch (choice)
     {
     case 1:
@@ -146,12 +149,13 @@ void sortMenu()
     {
         cout << "Enter your choice: ";
         cin >> choice1;
-        if (choice1 < 1 || choice1 > 5)
+        if (choice1 < 1 || choice1 > 6)
         {
             cout << "Invalid choice! Please try again!" << endl;
             continue;
         }
-    } while (choice1 < 1 || choice1 > 5);
+    } while (choice1 < 1 || choice1 > 6);
+    CLEAR_SCREEN;
     if (choice1 == 6)
     {
         mainMenu();

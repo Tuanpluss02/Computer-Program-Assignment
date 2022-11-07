@@ -13,6 +13,7 @@
 using ConsoleTable = samilton::ConsoleTable;
 
 #define FILE_PATH "E:\\CODE\\Cpp\\Computer-Program-Assignment\\data.txt"
+#define CLEAR_SCREEN system("cls")
 
 using namespace std;
 
