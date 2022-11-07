@@ -1,13 +1,12 @@
 #include "menu.hpp"
 
 void readData(string fileName);
-void formatAddress(string &address);
 
 int main()
 {
     readData(FILE_PATH);
-    printAllCustomer(customers);
-    // mainMenu();
+    // printAllCustomer(customers);
+    mainMenu();
     // searchMenu();
     // sortMenu();
     system("pause");
@@ -54,18 +53,10 @@ void readData(string fileName)
             name += rawData[i] + " ";
         }
         name.pop_back();
+        formatName(name);
         customers.push_back(Customer(ID, name, email, phone, bill, gender, address));
         index = 1;
         address = "";
     }
     input.close();
-}
-
-void formatAddress(string &address)
-{
-    for (auto &i : address)
-    {
-        if (i == ',' || i == '-')
-            i = '\n';
-    }
 }

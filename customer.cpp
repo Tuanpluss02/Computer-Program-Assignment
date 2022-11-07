@@ -441,3 +441,61 @@ void updateCustomer(vector<Customer> &customers, string ID)
     getline(cin, address);
     customers.push_back(Customer(ID, name, email, phone, bill, gender, address));
 }
+
+void formatAddress(string &address)
+{
+    for (auto &i : address)
+    {
+        if (i == ',' || i == '-')
+            i = '\n';
+    }
+}
+
+void formatName(string &name)
+{
+    transform(name.begin(), name.end(), name.begin(), ::tolower);
+    for (size_t i = 0; i < name.length() - 1; i++)
+    {
+        if (i == 0 || (name[i] == ' ' && name[i + 1] != ' '))
+        {
+            name[i] = toupper(name[i]);
+        }
+    }
+}
+
+long searchCustomerFibonacciSearch(vector<Customer> customers, size_t ID)
+{
+    size_t fiboMMn2 = 0;
+    size_t fiboMMn1 = 1;
+    size_t fiboM = fiboMMn2 + fiboMMn1;
+    while (fiboM < customers.size())
+    {
+        fiboMMn2 = fiboMMn1;
+        fiboMMn1 = fiboM;
+        fiboM = fiboMMn2 + fiboMMn1;
+    }
+    size_t offset = -1;
+    while (fiboM > 1)
+    {
+        size_t i = min(offset + fiboMMn2, customers.size() - 1);
+
+        if (stringToNumber(customers[i].getID()) < ID)
+        {
+            fiboM = fiboMMn1;
+            fiboMMn1 = fiboMMn2;
+            fiboMMn2 = fiboM - fiboMMn1;
+            offset = i;
+        }
+        else if (stringToNumber(customers[i].getID()) > ID)
+        {
+            fiboM = fiboMMn2;
+            fiboMMn1 = fiboMMn1 - fiboMMn2;
+            fiboMMn2 = fiboM - fiboMMn1;
+        }
+        else
+            return i;
+    }
+    if (fiboMMn1 && stringToNumber(customers[offset + 1].getID()) == ID)
+        return offset + 1;
+    return -1;
+}

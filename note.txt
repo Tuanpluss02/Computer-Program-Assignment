@@ -1,9 +1,3 @@
-1. search:
-    - search by regex;
-    - search using binary search;
-2. edit infomation of a customer
-3. add a new customer
-4. delete a customer
-5. sort by name, id, bill
-6. save to file
-
+Update cus
+save to file after add, update,...
+sort before using search

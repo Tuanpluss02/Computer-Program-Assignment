@@ -1,5 +1,5 @@
 ID          Name               Email                 Phone                 Bill                 Gender        Address
-1           Do Ngoc Tuan       Tuan@gmail.com        01907329432           450.000 VND          Male          123 Nguyen Van Linh, Quan 7, TP.HCM
+1           do Ngoc Tuan       Tuan@gmail.com        01907329432           450.000 VND          Male          123 Nguyen Van Linh, Quan 7, TP.HCM
 2           Tran Nam Phong     phong@gmail.com       09304062842           647.757 VND          Male          Nguyen Trai, Quan 1, TP.HCM
 3           Luong Ngoc Tung    Tung@gmail.com        02149083275           100.532.232 VND      Male          Nguyen Van Loc, Ha Noi
 4           Do Anh Phuong      Phuong@ptit.edu.vn    02343275834           643.253.123 VND      Female        Ba Vi, Ha Noi

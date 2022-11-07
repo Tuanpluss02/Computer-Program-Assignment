@@ -58,8 +58,9 @@ int partitionDescending(vector<Customer> &customers, int left, int right, int op
 long searchCustomer(vector<Customer> customers, string token, int option); // search customer by ID or free text
 long searchCustomerRegex(vector<Customer> customers, string token);        // search customer by regex
 long searchCustomerBinarySearch(vector<Customer> customers, size_t ID);    // search customer by binary search
+long searchCustomerFibonacciSearch(vector<Customer> customers, size_t ID); // search customer by linear search
 void printAllCustomer(vector<Customer> customers);
-
+void formatAddress(string &address);
 void deleteCustomer(vector<Customer> &customers, string ID);
 void addCustomer(vector<Customer> &customers, Customer customer);
 void updateCustomer(vector<Customer> &customers, string ID);
