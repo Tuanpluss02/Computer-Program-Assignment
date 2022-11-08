@@ -1,3 +1,4 @@
-Update cus
-save to file after add, update,...
-sort before using search
+Update cus // in progress
+save to file after add, update,... // done
+problem: find customer but not sort by id
+solution: sort by id after find customer

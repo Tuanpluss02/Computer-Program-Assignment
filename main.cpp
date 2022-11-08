@@ -5,10 +5,7 @@ void readData(string fileName);
 int main()
 {
     readData(FILE_PATH);
-    // printAllCustomer(customers);
     mainMenu();
-    // searchMenu();
-    // sortMenu();
     system("pause");
     return 0;
 }
@@ -41,7 +38,7 @@ void readData(string fileName)
                 break;
         }
         address.pop_back();
-        formatAddress(address);
+        address = formatName(address);
         ID = rawData[1];
         gender = rawData[index - 1];
         bill = rawData[index - 3] + " " + rawData[index - 2];
@@ -53,7 +50,7 @@ void readData(string fileName)
             name += rawData[i] + " ";
         }
         name.pop_back();
-        formatName(name);
+        name = formatName(name);
         customers.push_back(Customer(ID, name, email, phone, bill, gender, address));
         index = 1;
         address = "";

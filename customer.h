@@ -15,6 +15,8 @@ using ConsoleTable = samilton::ConsoleTable;
 #define FILE_PATH "E:\\CODE\\Cpp\\Computer-Program-Assignment\\data.txt"
 #define CLEAR_SCREEN system("cls")
 
+string CMD = "notepad \"E:\\CODE\\Cpp\\Computer-Program-Assignment\\data.txt\"";
+
 using namespace std;
 
 class Customer
@@ -56,14 +58,20 @@ bool isValidPhone(string phone);                                                
 void quickSort(vector<Customer> &customers, int left, int, int option, bool isAscending); // quick sort
 int partitionAsccending(vector<Customer> &customers, int left, int right, int option);
 int partitionDescending(vector<Customer> &customers, int left, int right, int option);
-long searchCustomer(vector<Customer> customers, string token, int option); // search customer by ID or free text
-long searchCustomerRegex(vector<Customer> customers, string token);        // search customer by regex
-long searchCustomerBinarySearch(vector<Customer> customers, size_t ID);    // search customer by binary search
-long searchCustomerFibonacciSearch(vector<Customer> customers, size_t ID); // search customer by linear search
+long searchCustomer(vector<Customer> &customers, string token, int option); // search customer by ID or free text
+long searchCustomerRegex(vector<Customer> customers, string token);         // search customer by regex
+long searchCustomerBinarySearch(vector<Customer> customers, size_t ID);     // search customer by binary search
+long searchCustomerFibonacciSearch(vector<Customer> customers, size_t ID);  // search customer by linear search
 void printAllCustomer(vector<Customer> customers);
-void formatAddress(string &address);
-void deleteCustomer(vector<Customer> &customers, string ID);
-void addCustomer(vector<Customer> &customers, Customer customer);
-void updateCustomer(vector<Customer> &customers, string ID);
+
+void deleteCustomer(vector<Customer> &customers);
+void addCustomer(vector<Customer> &customers);
+void updateCustomer(vector<Customer> &customers);
+
+string formatAddressForPrint(string address);
+string formatName(string name);
+string formatBill(string bill);
+
+void saveData(vector<Customer> customers);
 
 #endif // CUSTOMER_H

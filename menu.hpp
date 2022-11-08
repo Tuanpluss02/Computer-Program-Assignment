@@ -9,13 +9,13 @@ void mainMenu();
 void searchMenu();
 void sortMenu();
 void subSortMenu();
-void afterSort();
+void afterDone();
 
 void mainMenu()
 {
     ConsoleTable table(1, 1, samilton::Alignment::left);
     table[0][0](samilton::Alignment::centre) = "Menu";
-    table[1][0] = "[1] Add new customer\n[2] Search customer\n[3] Edit customer\n[4] Delete customer\n[5] Print all customers\n[6] Sort customer\n[7] Exit";
+    table[1][0] = "[1] Add new customer\n[2] Search customer\n[3] Edit customer\n[4] Delete customer\n[5] Print all customers\n[6] Sort customer\n[7] Open data file\n[0] Exit";
     table[2][0] = "          Made by Do Ngoc Tuan               ";
     cout << setw(40) << table;
     int choice;
@@ -23,33 +23,50 @@ void mainMenu()
     {
         cout << "Enter your choice: ";
         cin >> choice;
-        if (choice < 1 || choice > 7)
+        if (choice < 0 || choice > 8)
         {
             cout << "Invalid choice! Please enter again!" << endl;
         }
-    } while (choice < 1 || choice > 7);
+    } while (choice < 0 || choice > 8);
     CLEAR_SCREEN;
     switch (choice)
     {
     case 1:
         addCustomer(customers);
+        system("pause");
+        CLEAR_SCREEN;
+        mainMenu();
         break;
     case 2:
         searchMenu();
         break;
     case 3:
-        // updateCustomer(customers);
+        updateCustomer(customers);
+        system("pause");
+        CLEAR_SCREEN;
+        mainMenu();
         break;
     case 4:
-        // deleteCustomer(customers);
+        deleteCustomer(customers);
+        system("pause");
+        CLEAR_SCREEN;
+        mainMenu();
         break;
     case 5:
         printAllCustomer(customers);
+        system("pause");
+        CLEAR_SCREEN;
+        mainMenu();
         break;
     case 6:
         sortMenu();
         break;
     case 7:
+        system(CMD.c_str());
+        cout << "File opened successfully!" << endl;
+        mainMenu();
+        break;
+    case 0:
         exit(0);
         break;
     }
@@ -58,22 +75,16 @@ void searchMenu()
 {
     ConsoleTable table(1, 1, samilton::Alignment::left);
     table[0][0](samilton::Alignment::centre) = "Search Menu";
-    table[1][0] = "[1] Search by ID\n[2] Search by free text\n[6] Back to main menu";
+    table[1][0] = "[1] Search by ID\n[2] Search by name\n[3] Search by email\n[4] Search by phone\n[5] Search by bill\n[6] Search by gender\n[7] Search by address\n[8] Back to main menu";
     table[2][0] = "           Made by Do Ngoc Tuan             ";
     cout << setw(40) << table;
-    do
-    {
-        cout << "Enter your choice: ";
-        int choice;
-        cin >> choice;
-    } while (true);
 }
 
 void subSortMenu(int choice1)
 {
     ConsoleTable sortOption(1, 1, samilton::Alignment::left);
     sortOption[0][0](samilton::Alignment::centre) = "Sort Option";
-    sortOption[1][0] = "[1] Ascending\n[2] Descending\n[3] Back to sort menu";
+    sortOption[1][0] = "[1] Ascending\n[2] Descending\n[3] Back to sort menu\n[4] Back to main menu";
     sortOption[2][0] = "           Made by Do Ngoc Tuan             ";
     cout << setw(40) << sortOption;
     int choice2;
@@ -91,24 +102,27 @@ void subSortMenu(int choice1)
     case 1:
         isAscending = true;
         quickSort(customers, 0, customers.size() - 1, choice1, isAscending);
-        afterSort();
+        afterDone();
         break;
     case 2:
         isAscending = false;
         quickSort(customers, 0, customers.size() - 1, choice1, isAscending);
-        afterSort();
+        afterDone();
         break;
-    default:
+    case 3:
         sortMenu();
+        break;
+    case 4:
+        mainMenu();
         break;
     }
 }
 
-void afterSort()
+void afterDone()
 {
     ConsoleTable table(1, 1, samilton::Alignment::left);
-    table[0][0](samilton::Alignment::centre) = "Sort successfully!";
-    table[1][0] = "[1] Print all customers\n[2] Back to sort menu\n[3] Back to main menu\n[4] Exit";
+    table[0][0](samilton::Alignment::centre) = "Done!";
+    table[1][0] = "[1] Print all customers\n[2] Open data file\n[3] Back to sort menu\n[4] Back to main menu\n[0] Exit";
     table[2][0] = "           Made by Do Ngoc Tuan             ";
     cout << setw(40) << table;
     int choice;
@@ -116,17 +130,22 @@ void afterSort()
     {
         cout << "Enter your choice: ";
         cin >> choice;
-        if (choice > 4 || choice < 1)
+        if (choice > 4 || choice < 0)
             cout << "Invalid choice! Please try again!" << endl;
-    } while (choice > 4 || choice < 1);
+    } while (choice > 4 || choice < 0);
     CLEAR_SCREEN;
     switch (choice)
     {
     case 1:
         printAllCustomer(customers);
+        system("pause");
+        CLEAR_SCREEN;
+        mainMenu();
         break;
     case 2:
-        sortMenu();
+        system(CMD.c_str());
+        cout << "File opened successfully!" << endl;
+        mainMenu();
         break;
     case 3:
         mainMenu();
@@ -141,7 +160,7 @@ void sortMenu()
 {
     ConsoleTable table(1, 1, samilton::Alignment::left);
     table[0][0](samilton::Alignment::centre) = "Sort Menu";
-    table[1][0] = "[1] Sort by ID\n[2] Sort by name\n[3] Sort by email\n[4] Sort by phone\n[5] Sort by bill\n[6] Back to main menu";
+    table[1][0] = "[1] Sort by ID\n[2] Sort by name\n[3] Sort by email\n[4] Sort by phone\n[5] Sort by bill\n[6] Back to main menu\n[0] Exit";
     table[2][0] = "           Made by Do Ngoc Tuan             ";
     cout << setw(40) << table;
     int choice1;
@@ -149,16 +168,20 @@ void sortMenu()
     {
         cout << "Enter your choice: ";
         cin >> choice1;
-        if (choice1 < 1 || choice1 > 6)
+        if (choice1 < 0 || choice1 > 6)
         {
             cout << "Invalid choice! Please try again!" << endl;
             continue;
         }
-    } while (choice1 < 1 || choice1 > 6);
+    } while (choice1 < 0 || choice1 > 6);
     CLEAR_SCREEN;
     if (choice1 == 6)
     {
         mainMenu();
+    }
+    else if (choice1 == 0)
+    {
+        exit(0);
     }
     else
     {

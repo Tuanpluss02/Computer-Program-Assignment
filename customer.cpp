@@ -110,7 +110,7 @@ bool isValidPhone(string phone)
     return regex_match(phone, pattern);
 }
 
-long searchCustomer(vector<Customer> customers, string token, int option)
+long searchCustomer(vector<Customer> &customers, string token, int option)
 {
     if (option == 1)
     {
@@ -118,7 +118,13 @@ long searchCustomer(vector<Customer> customers, string token, int option)
     }
     else if (option == 2)
     {
+        quickSort(customers, 0, customers.size() - 1, 1, true);
         return searchCustomerBinarySearch(customers, stringToNumber(token));
+    }
+    else if (option == 3)
+    {
+        quickSort(customers, 0, customers.size() - 1, 1, true);
+        return searchCustomerFibonacciSearch(customers, stringToNumber(token));
     }
     return -1;
 }
@@ -140,6 +146,7 @@ void Customer::printCustomer()
     table[1][4] = bill;
     table[1][5] = gender;
     table[1][6] = address;
+    cout << setw(20) << table;
 }
 
 void quickSort(vector<Customer> &customers, int left, int right, int option, bool isAscending)
@@ -265,11 +272,10 @@ unsigned long long stringToNumber(string str)
 
 long searchCustomerRegex(vector<Customer> customers, string token)
 {
-    string regexToken = ".*" + token + ".*";
-    regex pattern(regexToken);
-    for (int i = 0; i < customers.size(); i++)
+    regex pattern(token);
+    for (size_t i = 0; i < customers.size(); i++)
     {
-        if (regex_match(customers[i].getID(), pattern) || regex_match(customers[i].getName(), pattern) || regex_match(customers[i].getEmail(), pattern) || regex_match(customers[i].getPhone(), pattern) || regex_match(customers[i].getBill(), pattern))
+        if (regex_match(customers[i].getID(), pattern) || regex_match(customers[i].getName(), pattern) || regex_match(customers[i].getEmail(), pattern) || regex_match(customers[i].getPhone(), pattern) || regex_match(customers[i].getBill(), pattern) || regex_match(customers[i].getGender(), pattern) || regex_match(customers[i].getAddress(), pattern))
         {
             return i;
         }
@@ -318,9 +324,9 @@ void printAllCustomer(vector<Customer> customers)
         table[i + 1][3] = customers[i].getPhone();
         table[i + 1][4] = customers[i].getBill();
         table[i + 1][5] = customers[i].getGender();
-        table[i + 1][6] = customers[i].getAddress();
+        table[i + 1][6] = formatAddressForPrint(customers[i].getAddress());
     }
-    cout << table;
+    cout << setw(20) << table;
 }
 
 void addCustomer(vector<Customer> &customers)
@@ -338,16 +344,16 @@ void addCustomer(vector<Customer> &customers)
             cout << "Invalid ID. Please enter again: ";
             continue;
         }
-        isExist = searchCustomerBinarySearch(customers, stringToNumber(ID));
+        isExist = searchCustomer(customers, ID, 3);
         if (isExist != -1)
         {
             cout << "ID is already exist. Please enter again: ";
-            continue;
         }
     } while (!validID || isExist != -1);
     cout << "Enter name: ";
     cin.ignore();
     getline(cin, name);
+    name = formatName(name);
     cout << "Enter email: ";
     do
     {
@@ -363,12 +369,17 @@ void addCustomer(vector<Customer> &customers)
     cin >> phone;
     cout << "Enter bill: ";
     cin >> bill;
+    bill = formatBill(bill);
     cout << "Enter gender: ";
     cin >> gender;
     cout << "Enter address: ";
     cin.ignore();
     getline(cin, address);
+    address = formatName(address);
     customers.push_back(Customer(ID, name, email, phone, bill, gender, address));
+    cout << "Add customer successfully!" << endl;
+    Customer(ID, name, email, phone, bill, gender, address).printCustomer();
+    saveData(customers);
 }
 
 void deleteCustomer(vector<Customer> &customers)
@@ -386,18 +397,31 @@ void deleteCustomer(vector<Customer> &customers)
             cout << "Invalid ID. Please enter again: ";
             continue;
         }
-        hasFound = searchCustomerBinarySearch(customers, stringToNumber(ID));
+        hasFound = searchCustomer(customers, ID, 2);
         if (hasFound == -1)
         {
             cout << "ID is not exist. Please enter again: ";
         }
     } while (!validID || hasFound == -1);
-    customers.erase(customers.begin() + hasFound);
+    customers[hasFound].printCustomer();
+    cout << "Are you sure to delete this customer? (Y/N): ";
+    char choice;
+    cin >> choice;
+    if (choice == 'Y' || choice == 'y')
+    {
+        customers.erase(customers.begin() + hasFound);
+        cout << "Delete successfully!" << endl;
+        saveData(customers);
+    }
+    else
+    {
+        cout << "Delete failed!" << endl;
+    }
 }
 
-void updateCustomer(vector<Customer> &customers, string ID)
+void updateCustomer(vector<Customer> &customers)
 {
-    string name, email, phone, bill, gender, address;
+    string ID, name, email, phone, bill, gender, address;
     bool validID, validEmail;
     long hasFound;
     cout << "Enter ID: ";
@@ -410,92 +434,144 @@ void updateCustomer(vector<Customer> &customers, string ID)
             cout << "Invalid ID. Please enter again: ";
             continue;
         }
-        hasFound = searchCustomerBinarySearch(customers, stringToNumber(ID));
+        hasFound = searchCustomer(customers, ID, 2);
         if (hasFound == -1)
         {
             cout << "ID is not exist. Please enter again: ";
         }
     } while (!validID || hasFound == -1);
-    cout << "Enter name: ";
-    cin.ignore();
-    getline(cin, name);
-    cout << "Enter email: ";
-    do
+    customers[hasFound].printCustomer();
+    cout << "Are you sure to update this customer? (Y/N): ";
+    char choice;
+    cin >> choice;
+    if (choice == 'Y' || choice == 'y')
     {
-        cin >> email;
-        validEmail = isValidEmail(email);
-        if (!validEmail)
+        cout << "Enter name: ";
+        cin.ignore();
+        getline(cin, name);
+        name = formatName(name);
+        cout << "Enter email: ";
+        do
         {
-            cout << "Invalid email. Please enter again: ";
-            continue;
-        }
-    } while (!validEmail);
-    cout << "Enter phone: ";
-    cin >> phone;
-    cout << "Enter bill: ";
-    cin >> bill;
-    cout << "Enter gender: ";
-    cin >> gender;
-    cout << "Enter address: ";
-    cin.ignore();
-    getline(cin, address);
-    customers.push_back(Customer(ID, name, email, phone, bill, gender, address));
+            cin >> email;
+            validEmail = isValidEmail(email);
+            if (!validEmail)
+            {
+                cout << "Invalid email. Please enter again: ";
+                continue;
+            }
+        } while (!validEmail);
+        cout << "Enter phone: ";
+        cin >> phone;
+        cout << "Enter bill: ";
+        cin >> bill;
+        bill = formatBill(bill);
+        cout << "Enter gender: ";
+        cin >> gender;
+        cout << "Enter address: ";
+        cin.ignore();
+        getline(cin, address);
+        address = formatName(address);
+        name = (name == "0") ? customers[hasFound].getName() : name;
+        email = (email == "0") ? customers[hasFound].getEmail() : email;
+        phone = (phone == "0") ? customers[hasFound].getPhone() : phone;
+        address = (address == "0") ? customers[hasFound].getAddress() : address;
+        bill = (bill == "0") ? customers[hasFound].getBill() : bill;
+        customers.push_back(Customer(ID, name, email, phone, bill, gender, address));
+        cout << "Update successfully!" << endl;
+        Customer(ID, name, email, phone, bill, gender, address).printCustomer();
+        saveData(customers);
+    }
+    else
+    {
+        cout << "Update failed!" << endl;
+    }
 }
 
-void formatAddress(string &address)
+string formatAddressForPrint(string address)
 {
     for (auto &i : address)
     {
         if (i == ',' || i == '-')
             i = '\n';
     }
+    return address;
 }
 
-void formatName(string &name)
+string formatName(string name)
 {
     transform(name.begin(), name.end(), name.begin(), ::tolower);
-    for (size_t i = 0; i < name.length() - 1; i++)
+    name[0] = toupper(name[0]);
+    for (size_t i = 1; i < name.length(); i++)
     {
-        if (i == 0 || (name[i] == ' ' && name[i + 1] != ' '))
+        if (name[i - 1] == ' ' && name[i] != ' ')
         {
             name[i] = toupper(name[i]);
         }
     }
+    return name;
+}
+
+string formatBill(string bill)
+{
+    int count = 0;
+    for (int i = bill.length() - 1; i >= 0; i--)
+    {
+        count++;
+        if (count == 3 && i != 0)
+        {
+            bill.insert(i, ",");
+            count = 0;
+        }
+    }
+    bill += " VND";
+    return bill;
 }
 
 long searchCustomerFibonacciSearch(vector<Customer> customers, size_t ID)
 {
-    size_t fiboMMn2 = 0;
-    size_t fiboMMn1 = 1;
-    size_t fiboM = fiboMMn2 + fiboMMn1;
-    while (fiboM < customers.size())
+    size_t fibo2 = 0;
+    size_t fibo1 = 1;
+    size_t fiboCur = fibo2 + fibo1;
+    while (fiboCur < customers.size())
     {
-        fiboMMn2 = fiboMMn1;
-        fiboMMn1 = fiboM;
-        fiboM = fiboMMn2 + fiboMMn1;
+        fibo2 = fibo1;
+        fibo1 = fiboCur;
+        fiboCur = fibo2 + fibo1;
     }
     size_t offset = -1;
-    while (fiboM > 1)
+    while (fiboCur > 1)
     {
-        size_t i = min(offset + fiboMMn2, customers.size() - 1);
+        size_t i = min(offset + fibo2, customers.size() - 1);
 
         if (stringToNumber(customers[i].getID()) < ID)
         {
-            fiboM = fiboMMn1;
-            fiboMMn1 = fiboMMn2;
-            fiboMMn2 = fiboM - fiboMMn1;
+            fiboCur = fibo1;
+            fibo1 = fibo2;
+            fibo2 = fiboCur - fibo1;
             offset = i;
         }
         else if (stringToNumber(customers[i].getID()) > ID)
         {
-            fiboM = fiboMMn2;
-            fiboMMn1 = fiboMMn1 - fiboMMn2;
-            fiboMMn2 = fiboM - fiboMMn1;
+            fiboCur = fibo2;
+            fibo1 = fibo1 - fibo2;
+            fibo2 = fiboCur - fibo1;
         }
         else
             return i;
     }
-    if (fiboMMn1 && stringToNumber(customers[offset + 1].getID()) == ID)
+    if (fibo1 && stringToNumber(customers[offset + 1].getID()) == ID)
         return offset + 1;
     return -1;
+}
+
+void saveData(vector<Customer> customers)
+{
+    ofstream file("E:\\CODE\\Cpp\\Computer-Program-Assignment\\data.txt");
+    file << left << setw(20) << "ID" << setw(40) << "Name" << setw(30) << "Email" << setw(30) << "Phone" << setw(20) << "Bill" << setw(10) << "Gender" << setw(50) << "Address" << endl;
+    for (int i = 0; i < customers.size(); i++)
+    {
+        file << left << setw(20) << customers[i].getID() << setw(40) << customers[i].getName() << setw(30) << customers[i].getEmail() << setw(30) << customers[i].getPhone() << setw(20) << customers[i].getBill() << setw(10) << customers[i].getGender() << setw(50) << customers[i].getAddress() << endl;
+    }
+    file.close();
 }
