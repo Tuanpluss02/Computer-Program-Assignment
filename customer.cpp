@@ -114,14 +114,10 @@ long searchCustomer(vector<Customer> &customers, string token, int option)
 {
     if (option == 1)
     {
-        return searchCustomerRegex(customers, token);
-    }
-    else if (option == 2)
-    {
         quickSort(customers, 0, customers.size() - 1, 1, true);
         return searchCustomerBinarySearch(customers, stringToNumber(token));
     }
-    else if (option == 3)
+    else if (option == 2)
     {
         quickSort(customers, 0, customers.size() - 1, 1, true);
         return searchCustomerFibonacciSearch(customers, stringToNumber(token));
@@ -270,17 +266,18 @@ unsigned long long stringToNumber(string str)
     return result;
 }
 
-long searchCustomerRegex(vector<Customer> customers, string token)
+vector<Customer> searchCustomerRegex(vector<Customer> customers, string token)
 {
-    regex pattern(token);
+    regex pattern(".*" + token + ".*", regex_constants::icase);
+    vector<Customer> result;
     for (size_t i = 0; i < customers.size(); i++)
     {
         if (regex_match(customers[i].getID(), pattern) || regex_match(customers[i].getName(), pattern) || regex_match(customers[i].getEmail(), pattern) || regex_match(customers[i].getPhone(), pattern) || regex_match(customers[i].getBill(), pattern) || regex_match(customers[i].getGender(), pattern) || regex_match(customers[i].getAddress(), pattern))
         {
-            return i;
+            result.push_back(customers[i]);
         }
     }
-    return -1;
+    return result;
 }
 
 long searchCustomerBinarySearch(vector<Customer> customers, size_t ID)
@@ -344,7 +341,7 @@ void addCustomer(vector<Customer> &customers)
             cout << "Invalid ID. Please enter again: ";
             continue;
         }
-        isExist = searchCustomer(customers, ID, 3);
+        isExist = searchCustomer(customers, ID, 1);
         if (isExist != -1)
         {
             cout << "ID is already exist. Please enter again: ";
@@ -397,7 +394,7 @@ void deleteCustomer(vector<Customer> &customers)
             cout << "Invalid ID. Please enter again: ";
             continue;
         }
-        hasFound = searchCustomer(customers, ID, 2);
+        hasFound = searchCustomer(customers, ID, 1);
         if (hasFound == -1)
         {
             cout << "ID is not exist. Please enter again: ";
@@ -434,7 +431,7 @@ void updateCustomer(vector<Customer> &customers)
             cout << "Invalid ID. Please enter again: ";
             continue;
         }
-        hasFound = searchCustomer(customers, ID, 2);
+        hasFound = searchCustomer(customers, ID, 1);
         if (hasFound == -1)
         {
             cout << "ID is not exist. Please enter again: ";
@@ -454,6 +451,8 @@ void updateCustomer(vector<Customer> &customers)
         do
         {
             cin >> email;
+            if (email == "0")
+                break;
             validEmail = isValidEmail(email);
             if (!validEmail)
             {
@@ -477,7 +476,7 @@ void updateCustomer(vector<Customer> &customers)
         phone = (phone == "0") ? customers[hasFound].getPhone() : phone;
         address = (address == "0") ? customers[hasFound].getAddress() : address;
         bill = (bill == "0") ? customers[hasFound].getBill() : bill;
-        customers.push_back(Customer(ID, name, email, phone, bill, gender, address));
+        customers[hasFound] = Customer(ID, name, email, phone, bill, gender, address);
         cout << "Update successfully!" << endl;
         Customer(ID, name, email, phone, bill, gender, address).printCustomer();
         saveData(customers);

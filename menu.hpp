@@ -4,7 +4,8 @@ using ConsoleTable = samilton::ConsoleTable;
 vector<Customer> customers;
 
 using namespace std;
-
+void searchByFreeText();
+void searchByID();
 void mainMenu();
 void searchMenu();
 void sortMenu();
@@ -71,13 +72,40 @@ void mainMenu()
         break;
     }
 }
+
 void searchMenu()
 {
     ConsoleTable table(1, 1, samilton::Alignment::left);
     table[0][0](samilton::Alignment::centre) = "Search Menu";
-    table[1][0] = "[1] Search by ID\n[2] Search by name\n[3] Search by email\n[4] Search by phone\n[5] Search by bill\n[6] Search by gender\n[7] Search by address\n[8] Back to main menu";
+    table[1][0] = "[1] Search by ID\n[2] Search by free text\n[3] Back to main menu\n[0] Exit";
     table[2][0] = "           Made by Do Ngoc Tuan             ";
     cout << setw(40) << table;
+    int choice;
+    do
+    {
+        cout << "Enter your choice: ";
+        cin >> choice;
+        if (choice < 1 || choice > 8)
+        {
+            cout << "Invalid choice! Please enter again!" << endl;
+        }
+    } while (choice < 1 || choice > 8);
+    CLEAR_SCREEN;
+    switch (choice)
+    {
+    case 1:
+        searchByID();
+        break;
+    case 2:
+        searchByFreeText();
+        break;
+    case 3:
+        mainMenu();
+        break;
+    case 0:
+        exit(0);
+        break;
+    }
 }
 
 void subSortMenu(int choice1)
@@ -122,7 +150,7 @@ void afterDone()
 {
     ConsoleTable table(1, 1, samilton::Alignment::left);
     table[0][0](samilton::Alignment::centre) = "Done!";
-    table[1][0] = "[1] Print all customers\n[2] Open data file\n[3] Back to sort menu\n[4] Back to main menu\n[0] Exit";
+    table[1][0] = "[1] Print all customers\n[2] Open data file\n[3] Back to main menu\n[0] Exit";
     table[2][0] = "           Made by Do Ngoc Tuan             ";
     cout << setw(40) << table;
     int choice;
@@ -130,9 +158,9 @@ void afterDone()
     {
         cout << "Enter your choice: ";
         cin >> choice;
-        if (choice > 4 || choice < 0)
+        if (choice > 3 || choice < 0)
             cout << "Invalid choice! Please try again!" << endl;
-    } while (choice > 4 || choice < 0);
+    } while (choice > 3 || choice < 0);
     CLEAR_SCREEN;
     switch (choice)
     {
@@ -186,5 +214,50 @@ void sortMenu()
     else
     {
         subSortMenu(choice1);
+    }
+}
+
+void searchByFreeText()
+{
+    string keyword;
+    cout << "Enter keyword: ";
+    cin.ignore();
+    getline(cin, keyword);
+    vector<Customer> res = searchCustomerRegex(customers, keyword);
+    if (res.size() == 0)
+    {
+        cout << "No result found!" << endl;
+        system("pause");
+        CLEAR_SCREEN;
+        searchMenu();
+    }
+    else
+    {
+        printAllCustomer(res);
+        system("pause");
+        CLEAR_SCREEN;
+        searchMenu();
+    }
+}
+
+void searchByID()
+{
+    size_t id;
+    cout << "Enter ID: ";
+    cin >> id;
+    long index = searchCustomerBinarySearch(customers, id);
+    if (index == -1)
+    {
+        cout << "Not found!" << endl;
+        system("pause");
+        CLEAR_SCREEN;
+        searchMenu();
+    }
+    else
+    {
+        customers[index].printCustomer();
+        system("pause");
+        CLEAR_SCREEN;
+        searchMenu();
     }
 }

@@ -58,10 +58,10 @@ bool isValidPhone(string phone);                                                
 void quickSort(vector<Customer> &customers, int left, int, int option, bool isAscending); // quick sort
 int partitionAsccending(vector<Customer> &customers, int left, int right, int option);
 int partitionDescending(vector<Customer> &customers, int left, int right, int option);
-long searchCustomer(vector<Customer> &customers, string token, int option); // search customer by ID or free text
-long searchCustomerRegex(vector<Customer> customers, string token);         // search customer by regex
-long searchCustomerBinarySearch(vector<Customer> customers, size_t ID);     // search customer by binary search
-long searchCustomerFibonacciSearch(vector<Customer> customers, size_t ID);  // search customer by linear search
+long searchCustomer(vector<Customer> &customers, string token, int option);     // search customer by ID or free text
+vector<Customer> searchCustomerRegex(vector<Customer> customers, string token); // search customer by regex
+long searchCustomerBinarySearch(vector<Customer> customers, size_t ID);         // search customer by binary search
+long searchCustomerFibonacciSearch(vector<Customer> customers, size_t ID);      // search customer by linear search
 void printAllCustomer(vector<Customer> customers);
 
 void deleteCustomer(vector<Customer> &customers);
