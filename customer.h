@@ -73,5 +73,6 @@ string formatName(string name);
 string formatBill(string bill);
 
 void saveData(vector<Customer> customers);
+string getLastName(string name);
 
 #endif // CUSTOMER_H

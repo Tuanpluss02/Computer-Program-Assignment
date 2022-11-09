@@ -6,3 +6,4 @@ ID                  Name                                    Email               
 5                   Nguyen Van A                            dsfbds@dsff.vn                02348257456                   100.000 VND         Female    Dong Nai                                          
 8                   Pham Thi Huyen                          fdskhj@gmail.com              0973786474                    100,000,000 VND     Male      My Dinh - Ha Noi                                  
 9                   Nguyen Thi Huyen                        wqyueqwy@gds.com              0908372638                    188,827,234 VND     Female    Nam Truc - Nam Dinh                               
+7                   Nguyen Trung Anh                        ttrunganh@gmail.com           090937284                     1,000,938,473 VND   Male      Tran Phu - Ha Noi                                 

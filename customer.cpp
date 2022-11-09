@@ -171,7 +171,7 @@ int partitionAsccending(vector<Customer> &customers, int left, int right, int op
             }
             break;
         case 2:
-            if (customers[j].getName() < pivot.getName())
+            if (getLastName(customers[j].getName()) < getLastName(pivot.getName()))
             {
                 i++;
                 swap(customers[i], customers[j]);
@@ -220,7 +220,7 @@ int partitionDescending(vector<Customer> &customers, int left, int right, int op
             }
             break;
         case 2:
-            if (customers[j].getName() > pivot.getName())
+            if (getLastName(customers[j].getName()) > getLastName(pivot.getName()))
             {
                 i++;
                 swap(customers[i], customers[j]);
@@ -573,4 +573,18 @@ void saveData(vector<Customer> customers)
         file << left << setw(20) << customers[i].getID() << setw(40) << customers[i].getName() << setw(30) << customers[i].getEmail() << setw(30) << customers[i].getPhone() << setw(20) << customers[i].getBill() << setw(10) << customers[i].getGender() << setw(50) << customers[i].getAddress() << endl;
     }
     file.close();
+}
+
+string getLastName(string name)
+{
+    string lastName = "";
+    for (int i = name.length() - 1; i >= 0; i--)
+    {
+        if (name[i] == ' ')
+        {
+            break;
+        }
+        lastName = name[i] + lastName;
+    }
+    return lastName;
 }
