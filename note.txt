@@ -1,4 +1,3 @@
-Update cus // in progress
-save to file after add, update,... // done
-problem: find customer but not sort by id
-solution: sort by id after find customer
+get => id, name , email , phone, bill, gender, address 
+if add: name , email , phone, bill, gender, address
+if edit: id, name , email , phone, bill, gender, address 

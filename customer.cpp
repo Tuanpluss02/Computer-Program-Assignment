@@ -92,6 +92,12 @@ string Customer::getAddress()
     return address;
 }
 
+bool isValidBill(string bill)
+{
+    regex pattern("^[0-9]{1,}$");
+    return regex_match(bill, pattern);
+}
+
 bool isValidEmail(string email)
 {
     regex pattern("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
@@ -328,54 +334,10 @@ void printAllCustomer(vector<Customer> customers)
 
 void addCustomer(vector<Customer> &customers)
 {
-    string ID, name, email, phone, bill, gender, address;
-    bool validID, validEmail;
-    long isExist;
-    cout << "Enter ID: ";
-    do
-    {
-        cin >> ID;
-        validID = isValidID(ID);
-        if (!validID)
-        {
-            cout << "Invalid ID. Please enter again: ";
-            continue;
-        }
-        isExist = searchCustomer(customers, ID, 1);
-        if (isExist != -1)
-        {
-            cout << "ID is already exist. Please enter again: ";
-        }
-    } while (!validID || isExist != -1);
-    cout << "Enter name: ";
-    cin.ignore();
-    getline(cin, name);
-    name = formatName(name);
-    cout << "Enter email: ";
-    do
-    {
-        cin >> email;
-        validEmail = isValidEmail(email);
-        if (!validEmail)
-        {
-            cout << "Invalid email. Please enter again: ";
-            continue;
-        }
-    } while (!validEmail);
-    cout << "Enter phone: ";
-    cin >> phone;
-    cout << "Enter bill: ";
-    cin >> bill;
-    bill = formatBill(bill);
-    cout << "Enter gender: ";
-    cin >> gender;
-    cout << "Enter address: ";
-    cin.ignore();
-    getline(cin, address);
-    address = formatName(address);
-    customers.push_back(Customer(ID, name, email, phone, bill, gender, address));
+    Customer customer = setCustomerInformation(customers, false, 0);
+    customers.push_back(customer);
     cout << "Add customer successfully!" << endl;
-    Customer(ID, name, email, phone, bill, gender, address).printCustomer();
+    customer.printCustomer();
     saveData(customers);
 }
 
@@ -418,9 +380,10 @@ void deleteCustomer(vector<Customer> &customers)
 
 void updateCustomer(vector<Customer> &customers)
 {
-    string ID, name, email, phone, bill, gender, address;
+
+    string ID;
     bool validID, validEmail;
-    long hasFound;
+    long hasFound, selectGender = 0;
     cout << "Enter ID: ";
     do
     {
@@ -443,47 +406,11 @@ void updateCustomer(vector<Customer> &customers)
     cin >> choice;
     if (choice == 'Y' || choice == 'y')
     {
-        cout << "Enter name: ";
-        cin.ignore();
-        getline(cin, name);
-        name = formatName(name);
-        cout << "Enter email: ";
-        do
-        {
-            cin >> email;
-            if (email == "0")
-                break;
-            validEmail = isValidEmail(email);
-            if (!validEmail)
-            {
-                cout << "Invalid email. Please enter again: ";
-                continue;
-            }
-        } while (!validEmail);
-        cout << "Enter phone: ";
-        cin >> phone;
-        cout << "Enter bill: ";
-        cin >> bill;
-        bill = formatBill(bill);
-        cout << "Enter gender: ";
-        cin >> gender;
-        cout << "Enter address: ";
-        cin.ignore();
-        getline(cin, address);
-        address = formatName(address);
-        name = (name == "0") ? customers[hasFound].getName() : name;
-        email = (email == "0") ? customers[hasFound].getEmail() : email;
-        phone = (phone == "0") ? customers[hasFound].getPhone() : phone;
-        address = (address == "0") ? customers[hasFound].getAddress() : address;
-        bill = (bill == "0") ? customers[hasFound].getBill() : bill;
-        customers[hasFound] = Customer(ID, name, email, phone, bill, gender, address);
+        cout << "If you don't want to update any field, just press 0" << endl;
+        customers[hasFound] = setCustomerInformation(customers, true, hasFound);
         cout << "Update successfully!" << endl;
-        Customer(ID, name, email, phone, bill, gender, address).printCustomer();
+        customers[hasFound].printCustomer();
         saveData(customers);
-    }
-    else
-    {
-        cout << "Update failed!" << endl;
     }
 }
 
@@ -566,11 +493,11 @@ long searchCustomerFibonacciSearch(vector<Customer> customers, size_t ID)
 
 void saveData(vector<Customer> customers)
 {
-    ofstream file("E:\\CODE\\Cpp\\Computer-Program-Assignment\\data.txt");
-    file << left << setw(20) << "ID" << setw(40) << "Name" << setw(30) << "Email" << setw(30) << "Phone" << setw(20) << "Bill" << setw(10) << "Gender" << setw(50) << "Address" << endl;
+    ofstream file(FILE_PATH);
+    file << left << setw(20) << "ID" << setw(40) << "Name" << setw(30) << "Email" << setw(30) << "Phone" << setw(30) << "Bill" << setw(10) << "Gender" << setw(50) << "Address" << endl;
     for (int i = 0; i < customers.size(); i++)
     {
-        file << left << setw(20) << customers[i].getID() << setw(40) << customers[i].getName() << setw(30) << customers[i].getEmail() << setw(30) << customers[i].getPhone() << setw(20) << customers[i].getBill() << setw(10) << customers[i].getGender() << setw(50) << customers[i].getAddress() << endl;
+        file << left << setw(20) << customers[i].getID() << setw(40) << customers[i].getName() << setw(30) << customers[i].getEmail() << setw(30) << customers[i].getPhone() << setw(30) << customers[i].getBill() << setw(10) << customers[i].getGender() << setw(50) << customers[i].getAddress() << endl;
     }
     file.close();
 }
@@ -587,4 +514,140 @@ string getLastName(string name)
         lastName = name[i] + lastName;
     }
     return lastName;
+}
+
+Customer setCustomerInformation(vector<Customer> customers, bool isUpdate, long index)
+{
+    string ID = "0", name, email, phone, bill, gender, address;
+    long selectGender, hasFound;
+    bool validID, validEmail, validPhone, validBill;
+    vector<Customer> forSearch = customers;
+    cout << "Enter ID: ";
+    do
+    {
+        cin >> ID;
+        if (ID == "0")
+        {
+            if (!isUpdate)
+            {
+
+                cout << "ID can't be 0. Please enter again: ";
+                continue;
+            }
+            else
+            {
+                break;
+            }
+        }
+        validID = isValidID(ID);
+        if (!validID)
+        {
+            cout << "Invalid ID. Please enter again: ";
+            continue;
+        }
+        hasFound = searchCustomer(forSearch, ID, 1);
+        if (hasFound != -1)
+        {
+            cout << "ID is not available. Please enter again: ";
+        }
+    } while (!validID || hasFound != -1);
+    cout << "Enter name: ";
+    cin.ignore();
+    getline(cin, name);
+    if (name != "0")
+        name = formatName(name);
+    cout << "Enter email: ";
+    do
+    {
+        cin >> email;
+        if (email == "0")
+        {
+            if (!isUpdate)
+            {
+                cout << "Invalid email. Please enter again:  ";
+                continue;
+            }
+            else
+            {
+                break;
+            }
+        }
+        validEmail = isValidEmail(email);
+        if (!validEmail)
+        {
+            cout << "Invalid email. Please enter again: ";
+            continue;
+        }
+    } while (!validEmail);
+    cout << "Enter phone: ";
+    do
+    {
+        cin >> phone;
+        if (phone == "0")
+        {
+            if (!isUpdate)
+            {
+                cout << "Invalid phone. Please enter again:  ";
+                continue;
+            }
+            else
+            {
+                break;
+            }
+        }
+        validPhone = isValidPhone(phone);
+        if (!validPhone)
+        {
+            cout << "Invalid phone. Please enter again: ";
+        }
+    } while (!validPhone);
+    cout << "Enter bill: ";
+    do
+    {
+        cin >> bill;
+        if (bill == "0")
+        {
+            if (!isUpdate)
+            {
+                cout << "Bill can't be 0. Please enter again: ";
+                continue;
+            }
+            else
+            {
+                break;
+            }
+        }
+        validBill = isValidBill(bill);
+        if (!validBill)
+        {
+            cout << "Invalid bill. Please enter again: ";
+        }
+    } while (!validBill);
+    if (bill != "0")
+        bill = formatBill(bill);
+    cout << "Enter gender: ";
+    cout << "[1] Male           [2] Female" << endl;
+    do
+    {
+        cin >> selectGender;
+        if (selectGender == 0)
+            break;
+
+    } while (selectGender > 2 && selectGender < 0);
+    cout << "Enter address: ";
+    cin.ignore();
+    getline(cin, address);
+    address = formatName(address);
+    gender = (selectGender == 1) ? "Male" : "Female";
+    if (isUpdate)
+    {
+        ID = (ID == "0") ? customers[index].getID() : ID;
+        name = (name == "0") ? customers[index].getName() : name;
+        email = (email == "0") ? customers[index].getEmail() : email;
+        phone = (phone == "0") ? customers[index].getPhone() : phone;
+        address = (address == "0") ? customers[index].getAddress() : address;
+        bill = (bill == "0") ? customers[index].getBill() : formatBill(bill);
+        gender = (selectGender == 0) ? customers[index].getGender() : gender;
+    }
+    return Customer(ID, name, email, phone, bill, gender, address);
 }

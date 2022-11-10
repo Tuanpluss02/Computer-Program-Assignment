@@ -85,11 +85,11 @@ void searchMenu()
     {
         cout << "Enter your choice: ";
         cin >> choice;
-        if (choice < 1 || choice > 8)
+        if (choice < 0 || choice > 8)
         {
             cout << "Invalid choice! Please enter again!" << endl;
         }
-    } while (choice < 1 || choice > 8);
+    } while (choice < 0 || choice > 8);
     CLEAR_SCREEN;
     switch (choice)
     {

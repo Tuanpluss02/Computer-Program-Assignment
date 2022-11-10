@@ -41,17 +41,18 @@ public:
     void setPhone(string phone);                                                                              // set phone
     void setGender(string gender);
     void setAddress(string address);
-    string getID();    // get ID
-    string getName();  // get name
-    string getEmail(); // get email
-    string getBill();  // get bill
-    string getPhone(); // get phone
-    string getGender();
-    string getAddress();
+    string getID();      // get ID
+    string getName();    // get name
+    string getEmail();   // get email
+    string getBill();    // get bill
+    string getPhone();   // get phone
+    string getGender();  // get Gender
+    string getAddress(); // get address
     void printCustomer();
 };
 
 unsigned long long stringToNumber(string str);
+bool isValidBill(string bill);
 bool isValidEmail(string email);                                                          // check if email is valid
 bool isValidID(string ID);                                                                // check if ID is valid
 bool isValidPhone(string phone);                                                          // check if phone is valid
@@ -74,5 +75,6 @@ string formatBill(string bill);
 
 void saveData(vector<Customer> customers);
 string getLastName(string name);
+Customer setCustomerInformation(vector<Customer> customers, bool isUpdate, long index);
 
 #endif // CUSTOMER_H
