@@ -285,7 +285,6 @@ vector<Customer> searchCustomerRegex(vector<Customer> customers, string token)
     }
     return result;
 }
-
 long searchCustomerBinarySearch(vector<Customer> customers, size_t ID)
 {
     int left = 0;
