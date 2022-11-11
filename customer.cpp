@@ -631,7 +631,12 @@ Customer setCustomerInformation(vector<Customer> customers, bool isUpdate, long 
     {
         cin >> selectGender;
         if (selectGender == 0)
-            break;
+        {
+            if (isUpdate)
+                break;
+            else
+                cout << "INVALID. Please enter again: ";
+        }
 
     } while (selectGender > 2 && selectGender < 0);
     cout << "Enter address: ";
@@ -646,8 +651,51 @@ Customer setCustomerInformation(vector<Customer> customers, bool isUpdate, long 
         email = (email == "0") ? customers[index].getEmail() : email;
         phone = (phone == "0") ? customers[index].getPhone() : phone;
         address = (address == "0") ? customers[index].getAddress() : address;
-        bill = (bill == "0") ? customers[index].getBill() : formatBill(bill);
+        bill = (bill == "0") ? customers[index].getBill() : bill;
         gender = (selectGender == 0) ? customers[index].getGender() : gender;
     }
     return Customer(ID, name, email, phone, bill, gender, address);
+}
+
+vector<Customer> filterBill(vector<Customer> customers, string bill, int option)
+{
+    vector<Customer> result;
+    for (int i = 0; i < customers.size(); i++)
+    {
+        if (option == 2)
+        {
+            if (stringToNumber(customers[i].getBill()) > stringToNumber(bill))
+            {
+                result.push_back(customers[i]);
+            }
+        }
+        else if (option == 3)
+        {
+            if (stringToNumber(customers[i].getBill()) < stringToNumber(bill))
+            {
+                result.push_back(customers[i]);
+            }
+        }
+        else if (option == 1)
+        {
+            if (stringToNumber(customers[i].getBill()) == stringToNumber(bill))
+            {
+                result.push_back(customers[i]);
+            }
+        }
+    }
+    return result;
+}
+
+vector<Customer> filterBill(vector<Customer> customers, unsigned long long start, unsigned long long end)
+{
+    vector<Customer> result;
+    for (int i = 0; i < customers.size(); i++)
+    {
+        if (stringToNumber(customers[i].getBill()) >= start && stringToNumber(customers[i].getBill()) <= end)
+        {
+            result.push_back(customers[i]);
+        }
+    }
+    return result;
 }

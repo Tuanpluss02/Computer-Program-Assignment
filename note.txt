@@ -1,3 +1,5 @@
-get => id, name , email , phone, bill, gender, address 
-if add: name , email , phone, bill, gender, address
-if edit: id, name , email , phone, bill, gender, address 
+95%
+- add filter:
+    filter by gender
+    filter by bill: greater than a value, less than a value, equal to a value
+    

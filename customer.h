@@ -6,7 +6,6 @@
 #include <vector>
 #include <fstream>
 #include <sstream>
-#include <deque>
 #include <regex>
 #include "CppConsoleTable.hpp"
 
@@ -51,30 +50,36 @@ public:
     void printCustomer();
 };
 
-unsigned long long stringToNumber(string str);
 bool isValidBill(string bill);
-bool isValidEmail(string email);                                                          // check if email is valid
-bool isValidID(string ID);                                                                // check if ID is valid
-bool isValidPhone(string phone);                                                          // check if phone is valid
+bool isValidEmail(string email); // check if email is valid
+bool isValidID(string ID);       // check if ID is valid
+bool isValidPhone(string phone); // check if phone is valid
+
 void quickSort(vector<Customer> &customers, int left, int, int option, bool isAscending); // quick sort
 int partitionAsccending(vector<Customer> &customers, int left, int right, int option);
 int partitionDescending(vector<Customer> &customers, int left, int right, int option);
+
 long searchCustomer(vector<Customer> &customers, string token, int option);     // search customer by ID or free text
 vector<Customer> searchCustomerRegex(vector<Customer> customers, string token); // search customer by regex
 long searchCustomerBinarySearch(vector<Customer> customers, size_t ID);         // search customer by binary search
 long searchCustomerFibonacciSearch(vector<Customer> customers, size_t ID);      // search customer by linear search
-void printAllCustomer(vector<Customer> customers);
+
+Customer setCustomerInformation(vector<Customer> customers, bool isUpdate, long index); // set customer information
+void printAllCustomer(vector<Customer> customers);                                      // print all customer
 
 void deleteCustomer(vector<Customer> &customers);
 void addCustomer(vector<Customer> &customers);
 void updateCustomer(vector<Customer> &customers);
 
+vector<Customer> filterBill(vector<Customer> customers, string bill, int option);
+vector<Customer> filterBill(vector<Customer> customers, unsigned long long start, unsigned long long end);
+
 string formatAddressForPrint(string address);
 string formatName(string name);
 string formatBill(string bill);
+unsigned long long stringToNumber(string str);
 
 void saveData(vector<Customer> customers);
 string getLastName(string name);
-Customer setCustomerInformation(vector<Customer> customers, bool isUpdate, long index);
 
 #endif // CUSTOMER_H
