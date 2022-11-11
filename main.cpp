@@ -10,6 +10,7 @@ int main()
     return 0;
 }
 
+
 void readData(string fileName)
 {
     ifstream input(fileName);
