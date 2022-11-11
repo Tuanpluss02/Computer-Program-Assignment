@@ -95,24 +95,44 @@ string Customer::getAddress()
 bool isValidBill(string bill)
 {
     regex pattern("^[0-9]{1,}$");
+    /* ^ : start of string
+    [0-9] : any digit
+    {1,} : at least 1 digit
+    $ : end of string
+     */
     return regex_match(bill, pattern);
 }
 
 bool isValidEmail(string email)
 {
     regex pattern("(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+");
+    /*
+    \\w+ : at least 1 word character
+    (\\.|_)? : . or _ or nothing
+    \\w* : 0 or more word character
+    @ : need @ after username
+    \\w+ : at least 1 word character
+    (\\.(\\w+))+ : . and at least 1 word character
+    */
     return regex_match(email, pattern);
 }
 
 bool isValidID(string ID)
 {
     regex pattern("[0-9]+");
+    /*
+    [0-9]+ : at least 1 digit
+    */
     return regex_match(ID, pattern);
 }
 
 bool isValidPhone(string phone)
 {
     regex pattern("(84|0[3|5|7|8|9])+([0-9]{8})");
+    /*
+    (84|0[3|5|7|8|9])+ : 84 or 0 and 3 or 5 or 7 or 8 or 9
+    ([0-9]{8}) : 8 digits
+    */
     return regex_match(phone, pattern);
 }
 
@@ -170,7 +190,7 @@ int partitionAsccending(vector<Customer> &customers, int left, int right, int op
         switch (option)
         {
         case 1:
-            if (customers[j].getID() < pivot.getID())
+            if (stringToNumber(customers[j].getID()) < stringToNumber(pivot.getID()))
             {
                 i++;
                 swap(customers[i], customers[j]);
@@ -219,7 +239,7 @@ int partitionDescending(vector<Customer> &customers, int left, int right, int op
         switch (option)
         {
         case 1:
-            if (customers[j].getID() > pivot.getID())
+            if (stringToNumber(customers[j].getID()) > stringToNumber(pivot.getID()))
             {
                 i++;
                 swap(customers[i], customers[j]);
