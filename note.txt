@@ -1,5 +1,0 @@
-95%
-- add filter:
-    filter by gender
-    filter by bill: greater than a value, less than a value, equal to a value
-    
