@@ -204,20 +204,6 @@ int partitionAsccending(vector<Customer> &customers, int left, int right, int op
             }
             break;
         case 3:
-            if (customers[j].getEmail() < pivot.getEmail())
-            {
-                i++;
-                swap(customers[i], customers[j]);
-            }
-            break;
-        case 4:
-            if (customers[j].getPhone() < pivot.getPhone())
-            {
-                i++;
-                swap(customers[i], customers[j]);
-            }
-            break;
-        case 5:
             if (stringToNumber(customers[j].getBill()) < stringToNumber(pivot.getBill()))
             {
                 i++;
@@ -253,20 +239,6 @@ int partitionDescending(vector<Customer> &customers, int left, int right, int op
             }
             break;
         case 3:
-            if (customers[j].getEmail() > pivot.getEmail())
-            {
-                i++;
-                swap(customers[i], customers[j]);
-            }
-            break;
-        case 4:
-            if (customers[j].getPhone() > pivot.getPhone())
-            {
-                i++;
-                swap(customers[i], customers[j]);
-            }
-            break;
-        case 5:
             if (stringToNumber(customers[j].getBill()) > stringToNumber(pivot.getBill()))
             {
                 i++;

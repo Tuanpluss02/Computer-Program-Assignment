@@ -197,7 +197,7 @@ void sortMenu()
 {
     ConsoleTable table(1, 1, samilton::Alignment::left);
     table[0][0](samilton::Alignment::centre) = "Sort Menu";
-    table[1][0] = "[1] Sort by ID\n[2] Sort by name\n[3] Sort by email\n[4] Sort by phone\n[5] Sort by bill\n[6] Back to main menu\n[0] Exit";
+    table[1][0] = "[1] Sort by ID\n[2] Sort by name\n[3] Sort by bill\n[4] Back to main menu\n[0] Exit";
     table[2][0] = "           Made by Do Ngoc Tuan             ";
     cout << setw(40) << table;
     int choice1;
@@ -205,14 +205,14 @@ void sortMenu()
     {
         cout << "Enter your choice: ";
         cin >> choice1;
-        if (choice1 < 0 || choice1 > 6)
+        if (choice1 < 0 || choice1 > 4)
         {
             cout << "Invalid choice! Please try again!" << endl;
             continue;
         }
-    } while (choice1 < 0 || choice1 > 6);
+    } while (choice1 < 0 || choice1 > 4);
     CLEAR_SCREEN;
-    if (choice1 == 6)
+    if (choice1 == 4)
     {
         mainMenu();
     }

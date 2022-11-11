@@ -56,8 +56,8 @@ bool isValidID(string ID);       // check if ID is valid
 bool isValidPhone(string phone); // check if phone is valid
 
 void quickSort(vector<Customer> &customers, int left, int, int option, bool isAscending); // quick sort
-int partitionAsccending(vector<Customer> &customers, int left, int right, int option);
-int partitionDescending(vector<Customer> &customers, int left, int right, int option);
+int partitionAsccending(vector<Customer> &customers, int left, int right, int option);    // partition for quick sort to sort in ascending order
+int partitionDescending(vector<Customer> &customers, int left, int right, int option);    // partition for quick sort to sort in descending order
 
 long searchCustomer(vector<Customer> &customers, string token, int option);     // search customer by ID or free text
 vector<Customer> searchCustomerRegex(vector<Customer> customers, string token); // search customer by regex
@@ -67,17 +67,17 @@ long searchCustomerFibonacciSearch(vector<Customer> customers, size_t ID);      
 Customer setCustomerInformation(vector<Customer> customers, bool isUpdate, long index); // set customer information
 void printAllCustomer(vector<Customer> customers);                                      // print all customer
 
-void deleteCustomer(vector<Customer> &customers);
-void addCustomer(vector<Customer> &customers);
-void updateCustomer(vector<Customer> &customers);
+void deleteCustomer(vector<Customer> &customers); // delete customer
+void addCustomer(vector<Customer> &customers);    // add customer
+void updateCustomer(vector<Customer> &customers); // update customer information
 
-vector<Customer> filterBill(vector<Customer> customers, string bill, int option);
-vector<Customer> filterBill(vector<Customer> customers, unsigned long long start, unsigned long long end);
+vector<Customer> filterBill(vector<Customer> customers, string bill, int option);                          // filter customer by bill (>=, <=, =)
+vector<Customer> filterBill(vector<Customer> customers, unsigned long long start, unsigned long long end); // filter customer by bill between start and end
 
-string formatAddressForPrint(string address);
-string formatName(string name);
-string formatBill(string bill);
-unsigned long long stringToNumber(string str);
+string formatAddressForPrint(string address);  // change address to fit in table
+string formatName(string name);                // uppercase first letter of each word
+string formatBill(string bill);                // add comma and currency to bill
+unsigned long long stringToNumber(string str); // convert string to number
 
 void saveData(vector<Customer> customers);
 string getLastName(string name);
