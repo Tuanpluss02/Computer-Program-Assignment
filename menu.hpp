@@ -264,7 +264,7 @@ void searchByID()
     }
     else
     {
-        customers[index].printCustomer();
+        cout << customers[index];
         system("pause");
         CLEAR_SCREEN;
         searchMenu();

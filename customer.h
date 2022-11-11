@@ -1,20 +1,20 @@
-#ifndef _CUSTOMER_H_
+#ifndef _CUSTOMER_H_ // include guard
 #define _CUSTOMER_H_
 
-#include <iostream>
-#include <string>
-#include <vector>
-#include <fstream>
-#include <sstream>
-#include <regex>
-#include "CppConsoleTable.hpp"
+#include <iostream>            // cin, cout
+#include <string>              // string
+#include <vector>              // vector
+#include <fstream>             // ifstream, ofstream
+#include <sstream>             // stringstream
+#include <regex>               // regex, regex_match
+#include "CppConsoleTable.hpp" // create table in console
 
-using ConsoleTable = samilton::ConsoleTable;
+using ConsoleTable = samilton::ConsoleTable; // define alias
 
-#define FILE_PATH "E:\\CODE\\Cpp\\Computer-Program-Assignment\\data.txt"
-#define CLEAR_SCREEN system("cls")
+#define FILE_PATH "E:\\CODE\\Cpp\\Computer-Program-Assignment\\data.txt" // define file path
+#define CLEAR_SCREEN system("cls")                                       // define clear screen
 
-string CMD = "notepad \"E:\\CODE\\Cpp\\Computer-Program-Assignment\\data.txt\"";
+string CMD = "notepad \"E:\\CODE\\Cpp\\Computer-Program-Assignment\\data.txt\""; // define command to open file in notepad
 
 using namespace std;
 
@@ -40,17 +40,17 @@ public:
     void setPhone(string phone);                                                                              // set phone
     void setGender(string gender);
     void setAddress(string address);
-    string getID();      // get ID
-    string getName();    // get name
-    string getEmail();   // get email
-    string getBill();    // get bill
-    string getPhone();   // get phone
-    string getGender();  // get Gender
-    string getAddress(); // get address
-    void printCustomer();
+    string getID();                                                    // get ID
+    string getName();                                                  // get name
+    string getEmail();                                                 // get email
+    string getBill();                                                  // get bill
+    string getPhone();                                                 // get phone
+    string getGender();                                                // get Gender
+    string getAddress();                                               // get address
+    friend ostream &operator<<(ostream &os, const Customer &customer); // friend function to overload operator <<
 };
 
-bool isValidBill(string bill);
+bool isValidBill(string bill);   // check bill is valid or not
 bool isValidEmail(string email); // check if email is valid
 bool isValidID(string ID);       // check if ID is valid
 bool isValidPhone(string phone); // check if phone is valid
@@ -79,7 +79,7 @@ string formatName(string name);                // uppercase first letter of each
 string formatBill(string bill);                // add comma and currency to bill
 unsigned long long stringToNumber(string str); // convert string to number
 
-void saveData(vector<Customer> customers);
-string getLastName(string name);
+void saveData(vector<Customer> customers); // save data to file
+string getLastName(string name);           // get last name of customer
 
 #endif // CUSTOMER_H

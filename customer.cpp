@@ -151,7 +151,7 @@ long searchCustomer(vector<Customer> &customers, string token, int option)
     return -1;
 }
 
-void Customer::printCustomer()
+ostream &operator<<(ostream &os, const Customer &customer)
 {
     ConsoleTable table(1, 1, samilton::Alignment::centre);
     table[0][0] = "ID";
@@ -161,14 +161,15 @@ void Customer::printCustomer()
     table[0][4] = "Bill";
     table[0][5] = "Gender";
     table[0][6] = "Address";
-    table[1][0] = ID;
-    table[1][1] = name;
-    table[1][2] = email;
-    table[1][3] = phone;
-    table[1][4] = bill;
-    table[1][5] = gender;
-    table[1][6] = address;
-    cout << setw(20) << table;
+    table[1][0] = customer.ID;
+    table[1][1] = customer.name;
+    table[1][2] = customer.email;
+    table[1][3] = customer.phone;
+    table[1][4] = customer.bill;
+    table[1][5] = customer.gender;
+    table[1][6] = customer.address;
+    os << setw(20) << table;
+    return os;
 }
 
 void quickSort(vector<Customer> &customers, int left, int right, int option, bool isAscending)
@@ -328,7 +329,7 @@ void addCustomer(vector<Customer> &customers)
     Customer customer = setCustomerInformation(customers, false, 0);
     customers.push_back(customer);
     cout << "Add customer successfully!" << endl;
-    customer.printCustomer();
+    cout << customer;
     saveData(customers);
 }
 
@@ -353,7 +354,7 @@ void deleteCustomer(vector<Customer> &customers)
             cout << "ID is not exist. Please enter again: ";
         }
     } while (!validID || hasFound == -1);
-    customers[hasFound].printCustomer();
+    cout << customers[hasFound];
     cout << "Are you sure to delete this customer? (Y/N): ";
     char choice;
     cin >> choice;
@@ -391,7 +392,7 @@ void updateCustomer(vector<Customer> &customers)
             cout << "ID is not exist. Please enter again: ";
         }
     } while (!validID || hasFound == -1);
-    customers[hasFound].printCustomer();
+    cout << customers[hasFound];
     cout << "Are you sure to update this customer? (Y/N): ";
     char choice;
     cin >> choice;
@@ -400,7 +401,7 @@ void updateCustomer(vector<Customer> &customers)
         cout << "If you don't want to update any field, just press 0" << endl;
         customers[hasFound] = setCustomerInformation(customers, true, hasFound);
         cout << "Update successfully!" << endl;
-        customers[hasFound].printCustomer();
+        cout << customers[hasFound];
         saveData(customers);
     }
 }
