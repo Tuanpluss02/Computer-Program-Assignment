@@ -137,11 +137,13 @@ void subSortMenu(int choice1)
     case 1:
         isAscending = true;
         quickSort(customers, 0, customers.size() - 1, choice1, isAscending);
+        saveData(customers);
         afterDone();
         break;
     case 2:
         isAscending = false;
         quickSort(customers, 0, customers.size() - 1, choice1, isAscending);
+        saveData(customers);
         afterDone();
         break;
     case 3:
