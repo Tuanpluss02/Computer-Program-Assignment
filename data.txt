@@ -1,5 +1,13 @@
 ID                  Name                                    Email                         Phone                         Bill                          Gender    Address                                           
 1                   Pham Thi Huyen                          fdskhj@gmail.com              0973786474                    100,000,000 VND               Male      My Dinh - Ha Noi                                  
-2                   Luong Ngoc Tung                         ugguj@gmail.com               8421739318                    648,484,494 VND               Male      Gia Lam - Ha Noi                                  
-3                   Dao Cong Su                             sucowsjh@ptit.vn              0915253621                    435,438,525,023 VND           Male      Phung Khoang - Ha Dong - Ha Noi                   
+2                   Nhu Hong Thai                           thaiu@gdad.com                0916718763                    100,000,000 VND               Male      Van Quan - Ha Noi                                 
+3                   Pham Thi Huyen                          fdskhj@gmail.com              0973786474                    100,000,000 VND               Male      My Dinh - Ha Noi                                  
 4                   Ngo Van Tri                             jdja@amc.cm                   0983274872                    194,372,994 VND               Female    La Khe - Ha Noi                                   
+5                   Ngo Van Tri                             jdja@amc.cm                   0983274872                    194,372,994 VND               Female    La Khe - Ha Noi                                   
+6                   Luong Ngoc Tung                         ugguj@gmail.com               8421739318                    648,484,494 VND               Male      Gia Lam - Ha Noi                                  
+7                   Luong Ngoc Tung                         ugguj@gmail.com               8421739318                    648,484,494 VND               Male      Gia Lam - Ha Noi                                  
+8                   Dao Cong Su                             sucowsjh@ptit.vn              0915253621                    435,438,525,023 VND           Male      Phung Khoang - Ha Dong - Ha Noi                   
+9                   Pham Thi Huyen                          fdskhj@gmail.com              0973786474                    100,000,000 VND               Male      My Dinh - Ha Noi                                  
+10                  Luong Ngoc Tung                         ugguj@gmail.com               8421739318                    648,484,494 VND               Male      Gia Lam - Ha Noi                                  
+11                  Dao Cong Su                             sucowsjh@ptit.vn              0915253621                    435,438,525,023 VND           Male      Phung Khoang - Ha Dong - Ha Noi                   
+12                  Ngo Van Tri                             jdja@amc.cm                   0983274872                    194,372,994 VND               Female    La Khe - Ha Noi                                   

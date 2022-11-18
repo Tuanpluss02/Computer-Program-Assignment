@@ -14,9 +14,9 @@ void mainMenu();
 void searchMenu();
 void sortMenu();
 void subSortMenu();
-void afterDone();
-void importMenu(vector<Customer> &customers);
-void exportMenu();
+void afterDone(vector<Customer> &Customers);
+void importMenu(vector<Customer> &Customers);
+void exportMenu(vector<Customer> &Customers);
 
 void mainMenu()
 {
@@ -161,7 +161,7 @@ void subSortMenu(int choice1)
     }
 }
 
-void afterDone()
+void afterDone(vector<Customer> &Customers)
 {
     ConsoleTable table(1, 1, samilton::Alignment::left);
     table[0][0](samilton::Alignment::centre) = "Done!";
@@ -180,7 +180,7 @@ void afterDone()
     switch (choice)
     {
     case 1:
-        printAllCustomer(customers);
+        printAllCustomer(Customers);
         system("pause");
         CLEAR_SCREEN;
         mainMenu();
@@ -474,7 +474,7 @@ void filterGenderMenu()
         break;
     }
 }
-void importMenu(vector<Customer> &customers)
+void importMenu(vector<Customer> &Customers)
 {
     string path = "E:\\CODE\\Cpp\\Computer-Program-Assignment\\asset";
     vector<string> rawData, files;
@@ -486,28 +486,33 @@ void importMenu(vector<Customer> &customers)
         string token = "";
         while (getline(ss, token, '\\'))
             ;
-        cout << token << endl;
         files.push_back(token);
     }
-    cout << "Enter file name to import: ";
-    string fileName;
-    bool isExist = false;
-    bool isReplace = false;
+    ConsoleTable table(1, 1, samilton::Alignment::left);
+    table[0][0](samilton::Alignment::centre) = "Chose file to import";
+    string tmp = "", fileName = "";
+    for (int i = 0; i < files.size(); i++)
+    {
+        tmp += "[" + to_string(i + 1) + "] " + files[i] + '\n';
+    }
+    table[1][0] = tmp;
+    cout << setw(40) << table;
+    cout << "Choose file to import: " << endl;
+    int selection;
     do
     {
-        cin >> fileName;
-        if (find(files.begin(), files.end(), fileName) == files.end())
+        cout << "Enter your choice: ";
+        cin >> selection;
+        if (selection < 1 || selection > files.size())
         {
-            cout << "File not found! Please try again!" << endl;
+            cout << "Invalid choice! Please try again!" << endl;
             continue;
         }
-        else
-        {
-            isExist = true;
-        }
-    } while (!isExist);
+    } while (selection < 1 || selection > files.size());
+    fileName = export_path + files[selection - 1];
     cout << "Do you want to replace current data? (Y/N): ";
     char choice;
+    bool isReplace = false;
     do
     {
         cin >> choice;
@@ -529,8 +534,44 @@ void importMenu(vector<Customer> &customers)
         }
     } while (choice != 'Y' && choice != 'y' && choice != 'N' && choice != 'n');
     CLEAR_SCREEN;
-    fileName = export_path + fileName;
-    cout << fileName << endl;
-    importData(fileName, customers, isReplace);
+    importData(fileName, Customers, isReplace);
     afterDone();
+}
+
+void exportMenu(vector<Customer> &Customers)
+{
+    string path = "E:\\CODE\\Cpp\\Computer-Program-Assignment\\asset";
+    vector<string> rawData, files;
+    for (const auto &entry : fs::directory_iterator(path))
+        rawData.push_back(entry.path().string());
+    for (auto file : rawData)
+    {
+        stringstream ss(file);
+        string token = "";
+        while (getline(ss, token, '\\'))
+            ;
+        files.push_back(token);
+    }
+    string fileName;
+    bool isExist = false;
+    cout << "Enter file name: ";
+    do
+    {
+        cin >> fileName;
+        fileName += ".txt";
+        if (find(files.begin(), files.end(), fileName) != files.end())
+        {
+            isExist = true;
+            cout << "File is exsit! Please try again!" << endl;
+            continue;
+        }
+        else
+        {
+            isExist = false;
+        }
+    } while (isExist);
+    fileName = export_path + fileName;
+    saveData(fileName, Customers);
+    cout << "Export successfully! The file is saved at " << export_path << endl;
+    afterDone(Customers);
 }
