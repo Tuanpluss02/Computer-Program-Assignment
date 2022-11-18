@@ -136,6 +136,16 @@ bool isValidPhone(string phone)
     return regex_match(phone, pattern);
 }
 
+bool isValidName(string name)
+{
+    // must have name and surname
+    regex pattern("([A-Z][a-z]+\\s[A-Z][a-z]+)");
+    /*
+    ([A-Z][a-z]+\\s[A-Z][a-z]+) : 1 word character and 1 space and 1 word character
+    */
+    return regex_match(name, pattern);
+}
+
 long searchCustomer(vector<Customer> &customers, string token, int option)
 {
     if (option == 1)
@@ -278,6 +288,7 @@ vector<Customer> searchCustomerRegex(vector<Customer> customers, string token)
     }
     return result;
 }
+
 long searchCustomerBinarySearch(vector<Customer> customers, size_t ID)
 {
     int left = 0;
@@ -319,18 +330,20 @@ void printAllCustomer(vector<Customer> customers)
         table[i + 1][3] = customers[i].getPhone();
         table[i + 1][4] = customers[i].getBill();
         table[i + 1][5] = customers[i].getGender();
-        table[i + 1][6] = formatAddressForPrint(customers[i].getAddress());
+
+        table[i + 1][6] = customers[i].getAddress();
     }
-    cout << setw(20) << table;
+    cout << setw(10) << table;
 }
 
 void addCustomer(vector<Customer> &customers)
 {
     Customer customer = setCustomerInformation(customers, false, 0);
     customers.push_back(customer);
+    quickSort(customers, 0, customers.size() - 1, 1, true);
     cout << "Add customer successfully!" << endl;
     cout << customer;
-    saveData(customers);
+    saveData(FILE_PATH, customers);
 }
 
 void deleteCustomer(vector<Customer> &customers)
@@ -357,17 +370,28 @@ void deleteCustomer(vector<Customer> &customers)
     cout << customers[hasFound];
     cout << "Are you sure to delete this customer? (Y/N): ";
     char choice;
-    cin >> choice;
-    if (choice == 'Y' || choice == 'y')
+    bool validChoice = true;
+    do
     {
-        customers.erase(customers.begin() + hasFound);
-        cout << "Delete successfully!" << endl;
-        saveData(customers);
-    }
-    else
-    {
-        cout << "Delete failed!" << endl;
-    }
+        cin >> choice;
+        if (choice == 'Y' || choice == 'y')
+        {
+            customers.erase(customers.begin() + hasFound);
+            cout << "Delete successfully!" << endl;
+            saveData(FILE_PATH, customers);
+            validChoice = true;
+        }
+        else if (choice == 'N' || choice == 'n')
+        {
+            cout << "Delete failed!" << endl;
+            validChoice = true;
+        }
+        else
+        {
+            cout << "Invalid choice. Please enter again: ";
+            validChoice = false;
+        }
+    } while (!validChoice);
 }
 
 void updateCustomer(vector<Customer> &customers)
@@ -387,6 +411,7 @@ void updateCustomer(vector<Customer> &customers)
             continue;
         }
         hasFound = searchCustomer(customers, ID, 1);
+
         if (hasFound == -1)
         {
             cout << "ID is not exist. Please enter again: ";
@@ -395,15 +420,26 @@ void updateCustomer(vector<Customer> &customers)
     cout << customers[hasFound];
     cout << "Are you sure to update this customer? (Y/N): ";
     char choice;
-    cin >> choice;
-    if (choice == 'Y' || choice == 'y')
+    do
     {
-        cout << "If you don't want to update any field, just press 0" << endl;
-        customers[hasFound] = setCustomerInformation(customers, true, hasFound);
-        cout << "Update successfully!" << endl;
-        cout << customers[hasFound];
-        saveData(customers);
-    }
+        cin >> choice;
+        if (choice == 'Y' || choice == 'y')
+        {
+            cout << "If you don't want to update any field, just press 0" << endl;
+            customers[hasFound] = setCustomerInformation(customers, true, hasFound);
+            cout << "Update successfully!" << endl;
+            cout << customers[hasFound];
+            saveData(FILE_PATH, customers);
+        }
+        else if (choice == 'N' || choice == 'n')
+        {
+            cout << "Cancelled!" << endl;
+        }
+        else
+        {
+            cout << "Invalid choice. Please enter again : ";
+        }
+    } while (choice != 'y' && choice != 'Y' && choice != 'n' && choice != 'N');
 }
 
 string formatAddressForPrint(string address)
@@ -448,19 +484,20 @@ string formatBill(string bill)
 
 long searchCustomerFibonacciSearch(vector<Customer> customers, size_t ID)
 {
-    size_t fibo2 = 0;
-    size_t fibo1 = 1;
-    size_t fiboCur = fibo2 + fibo1;
+    long fibo2 = 0;
+    long fibo1 = 1;
+    long fiboCur = fibo2 + fibo1;
     while (fiboCur < customers.size())
     {
         fibo2 = fibo1;
         fibo1 = fiboCur;
         fiboCur = fibo2 + fibo1;
     }
-    size_t offset = -1;
+    long offset = -1;
+    long cusSize = customers.size();
     while (fiboCur > 1)
     {
-        size_t i = min(offset + fibo2, customers.size() - 1);
+        long i = min(offset + fibo2, cusSize - 1);
 
         if (stringToNumber(customers[i].getID()) < ID)
         {
@@ -483,9 +520,9 @@ long searchCustomerFibonacciSearch(vector<Customer> customers, size_t ID)
     return -1;
 }
 
-void saveData(vector<Customer> customers)
+void saveData(string filePath, vector<Customer> customers)
 {
-    ofstream file(FILE_PATH);
+    ofstream file(filePath);
     file << left << setw(20) << "ID" << setw(40) << "Name" << setw(30) << "Email" << setw(30) << "Phone" << setw(30) << "Bill" << setw(10) << "Gender" << setw(50) << "Address" << endl;
     for (int i = 0; i < customers.size(); i++)
     {
@@ -690,4 +727,68 @@ vector<Customer> filterBill(vector<Customer> customers, unsigned long long start
         }
     }
     return result;
+}
+
+void readData(string fileName, vector<Customer> &customers)
+{
+    ifstream input(fileName);
+    if (!input.is_open())
+    {
+        cout << "Error opening file" << endl;
+        return;
+    }
+    string ID, name, email, phone, bill, gender, address = "", temp;
+    map<size_t, string> rawData;
+    size_t index = 1, rawDataSize;
+    getline(input, temp);
+    while (getline(input, temp) && temp != "")
+    {
+        stringstream splitData(temp);
+        string word;
+        while (splitData >> word)
+        {
+            rawData[index++] = word;
+        }
+        while (rawData[index - 1] != "Male" || rawData[index - 1] != "Female")
+        {
+            address = rawData[index - 1] + " " + address;
+            index--;
+            if (rawData[index - 1] == "Male" || rawData[index - 1] == "Female")
+                break;
+        }
+        address.pop_back();
+        address = formatName(address);
+        ID = rawData[1];
+        gender = rawData[index - 1];
+        bill = rawData[index - 3] + " " + rawData[index - 2];
+        phone = rawData[index - 4];
+        email = rawData[index - 5];
+        name = "";
+        for (size_t i = 2; i < index - 5; i++)
+        {
+            name += rawData[i] + " ";
+        }
+        name.pop_back();
+        name = formatName(name);
+        customers.push_back(Customer(ID, name, email, phone, bill, gender, address));
+        index = 1;
+        address = "";
+    }
+    input.close();
+}
+
+void importData(string filePath, vector<Customer> &customers, bool isReplace)
+{
+    if (isReplace)
+        customers.clear();
+    size_t oldSize = customers.size();
+    readData(filePath, customers);
+    size_t newSize = customers.size();
+    size_t id = 1;
+    for (auto &cus : customers)
+    {
+        cus.setID(to_string(id++));
+    }
+    saveData(FILE_PATH, customers);
+    cout << "Import successfully. Added " << newSize - oldSize << " customers to database" << endl;
 }

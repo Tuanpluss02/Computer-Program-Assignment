@@ -1,6 +1,7 @@
 #include "customer.cpp"
 
 using ConsoleTable = samilton::ConsoleTable;
+
 vector<Customer> customers;
 
 using namespace std;
@@ -14,12 +15,14 @@ void searchMenu();
 void sortMenu();
 void subSortMenu();
 void afterDone();
+void importMenu(vector<Customer> &customers);
+void exportMenu();
 
 void mainMenu()
 {
     ConsoleTable table(1, 1, samilton::Alignment::left);
     table[0][0](samilton::Alignment::centre) = "Menu";
-    table[1][0] = "[1] Add new customer\n[2] Delete customer\n[3] Edit customer\n[4] Search customer\n[5] Sort customer\n[6] Filter customer\n[7] Print all customers\n[8] Open data file\n[0] Exit";
+    table[1][0] = "[1] Add new customer\n[2] Delete customer\n[3] Edit customer\n[4] Search customer\n[5] Sort customer\n[6] Filter customer\n[7] Import data\n[8] Print all customer\n[9] Open data file\n[0] Exit";
     table[2][0] = "          Made by Do Ngoc Tuan               ";
     cout << setw(40) << table;
     int choice;
@@ -27,11 +30,11 @@ void mainMenu()
     {
         cout << "Enter your choice: ";
         cin >> choice;
-        if (choice < 0 || choice > 8)
+        if (choice < 0 || choice > 9)
         {
             cout << "Invalid choice! Please enter again!" << endl;
         }
-    } while (choice < 0 || choice > 8);
+    } while (choice < 0 || choice > 9);
     CLEAR_SCREEN;
     switch (choice)
     {
@@ -63,12 +66,15 @@ void mainMenu()
         filterMenu();
         break;
     case 7:
+        importMenu(customers);
+        break;
+    case 8:
         printAllCustomer(customers);
         system("pause");
         CLEAR_SCREEN;
         mainMenu();
         break;
-    case 8:
+    case 9:
         system(CMD.c_str());
         cout << "File opened successfully!" << endl;
         mainMenu();
@@ -137,13 +143,13 @@ void subSortMenu(int choice1)
     case 1:
         isAscending = true;
         quickSort(customers, 0, customers.size() - 1, choice1, isAscending);
-        saveData(customers);
+        saveData(FILE_PATH, customers);
         afterDone();
         break;
     case 2:
         isAscending = false;
         quickSort(customers, 0, customers.size() - 1, choice1, isAscending);
-        saveData(customers);
+        saveData(FILE_PATH, customers);
         afterDone();
         break;
     case 3:
@@ -467,4 +473,64 @@ void filterGenderMenu()
         exit(0);
         break;
     }
+}
+void importMenu(vector<Customer> &customers)
+{
+    string path = "E:\\CODE\\Cpp\\Computer-Program-Assignment\\asset";
+    vector<string> rawData, files;
+    for (const auto &entry : fs::directory_iterator(path))
+        rawData.push_back(entry.path().string());
+    for (auto file : rawData)
+    {
+        stringstream ss(file);
+        string token = "";
+        while (getline(ss, token, '\\'))
+            ;
+        cout << token << endl;
+        files.push_back(token);
+    }
+    cout << "Enter file name to import: ";
+    string fileName;
+    bool isExist = false;
+    bool isReplace = false;
+    do
+    {
+        cin >> fileName;
+        if (find(files.begin(), files.end(), fileName) == files.end())
+        {
+            cout << "File not found! Please try again!" << endl;
+            continue;
+        }
+        else
+        {
+            isExist = true;
+        }
+    } while (!isExist);
+    cout << "Do you want to replace current data? (Y/N): ";
+    char choice;
+    do
+    {
+        cin >> choice;
+        if (choice != 'Y' && choice != 'y' && choice != 'N' && choice != 'n')
+        {
+            cout << "Invalid choice! Please try again!" << endl;
+            continue;
+        }
+        else
+        {
+            if (choice == 'Y' || choice == 'y')
+            {
+                isReplace = true;
+            }
+            else if (choice == 'N' || choice == 'n')
+            {
+                isReplace = false;
+            }
+        }
+    } while (choice != 'Y' && choice != 'y' && choice != 'N' && choice != 'n');
+    CLEAR_SCREEN;
+    fileName = export_path + fileName;
+    cout << fileName << endl;
+    importData(fileName, customers, isReplace);
+    afterDone();
 }

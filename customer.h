@@ -2,6 +2,7 @@
 #define _CUSTOMER_H_
 
 #include <iostream>            // cin, cout
+#include <filesystem>          // directory_iterator
 #include <string>              // string
 #include <vector>              // vector
 #include <fstream>             // ifstream, ofstream
@@ -10,11 +11,12 @@
 #include "CppConsoleTable.hpp" // create table in console
 
 using ConsoleTable = samilton::ConsoleTable; // define alias
+namespace fs = std::filesystem;
 
-#define FILE_PATH "E:\\CODE\\Cpp\\Computer-Program-Assignment\\data.txt" // define file path
-#define CLEAR_SCREEN system("cls")                                       // define clear screen
-
-string CMD = "notepad \"E:\\CODE\\Cpp\\Computer-Program-Assignment\\data.txt\""; // define command to open file in notepad
+#define CLEAR_SCREEN system("cls")                                                     // define clear screen
+const string FILE_PATH = "E:\\CODE\\Cpp\\Computer-Program-Assignment\\data.txt";       // define file path
+const string CMD = "notepad \"E:\\CODE\\Cpp\\Computer-Program-Assignment\\data.txt\""; // define command to open file in notepad
+const string export_path = "E:\\CODE\\Cpp\\Computer-Program-Assignment\\asset\\";      // define data export path
 
 using namespace std;
 
@@ -55,6 +57,7 @@ bool isValidBill(string bill);   // check bill is valid or not
 bool isValidEmail(string email); // check if email is valid
 bool isValidID(string ID);       // check if ID is valid
 bool isValidPhone(string phone); // check if phone is valid
+bool isValidName(string name);   // check if name is valid
 
 //============== SORT FUNCTIONS ==============
 void quickSort(vector<Customer> &customers, int left, int, int option, bool isAscending); // quick sort
@@ -66,7 +69,7 @@ long searchCustomer(vector<Customer> &customers, string token, int option);     
 vector<Customer> searchCustomerRegex(vector<Customer> customers, string token); // search customer by regex
 long searchCustomerBinarySearch(vector<Customer> customers, size_t ID);         // search customer by binary search
 long searchCustomerFibonacciSearch(vector<Customer> customers, size_t ID);      // search customer by linear search
-                                                                                // print all customer
+
 //============== MAIN FEATURES ==============
 void deleteCustomer(vector<Customer> &customers); // delete customer
 void addCustomer(vector<Customer> &customers);    // add customer
@@ -82,9 +85,12 @@ string formatBill(string bill);                // add comma and currency to bill
 unsigned long long stringToNumber(string str); // convert string to number
 
 //============== OTHER FUNCTIONS ==============
-void saveData(vector<Customer> customers);                                              // save data to file
+
 string getLastName(string name);                                                        // get last name of customer
 Customer setCustomerInformation(vector<Customer> customers, bool isUpdate, long index); // set customer information
 void printAllCustomer(vector<Customer> customers);                                      // print all customer
+void importData(string filePath, vector<Customer> &customers, bool isReplace);          // import customers from other file
+void readData(string fileName, vector<Customer> &customers);
+void saveData(string filePath, vector<Customer> customers); // save data to file
 
 #endif // CUSTOMER_H
