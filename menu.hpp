@@ -270,10 +270,20 @@ void searchByFreeText()
 
 void searchByID()
 {
-    size_t id;
-    cout << "Enter ID: ";
-    cin >> id;
-    long index = searchCustomerBinarySearch(customers, id);
+    string id;
+    bool isValidId = false;
+    do
+    {
+        cout << "Enter ID: ";
+        cin >> id;
+        isValidId = isValidID(id);
+        if (!isValidId)
+            cout << "Invalid ID! Please try again!" << endl;
+        else
+            break;
+
+    } while (!isValidId);
+    long index = searchCustomer(customers, id, 1);
     if (index == -1)
     {
         cout << "Not found!" << endl;
@@ -518,7 +528,6 @@ void importMenu(vector<Customer> &Customers)
         if (selection < 1 || selection > files.size())
         {
             cout << "Invalid choice! Please try again!" << endl;
-            continue;
         }
     } while (selection < 1 || selection > files.size());
     fileName = export_path + files[selection - 1];
