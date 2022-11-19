@@ -8,16 +8,20 @@
 #include <fstream>             // ifstream, ofstream
 #include <sstream>             // stringstream
 #include <regex>               // regex, regex_match
+#include <windows.h>           // HANDLE, GetStdHandle, SetConsoleTextAttribute
 #include "CppConsoleTable.hpp" // create table in console
 
 using ConsoleTable = samilton::ConsoleTable; // define alias
 namespace fs = std::filesystem;
 
-#define CLEAR_SCREEN system("cls")                                                            // define clear screen
-const string FILE_PATH = "E:\\CODE\\Cpp\\Computer-Program-Assignment\\data\\data.txt";        // define file path
-const string CMD = "notepad \"E:\\CODE\\Cpp\\Computer-Program-Assignment\\data\\data.txt\"";  // define command to open file in notepad
-const string export_path = "E:\\CODE\\Cpp\\Computer-Program-Assignment\\asset\\exportData\\"; // define data export path
-const string import_path = "E:\\CODE\\Cpp\\Computer-Program-Assignment\\asset\\importData\\"; // define data import path
+#define CLEAR_SCREEN system("cls")
+
+// define clear screen
+const string FILE_PATH = "E:\\CODE\\Cpp\\Computer-Program-Assignment\\asset\\data\\data.txt";       // define file path
+const string CMD = "notepad \"E:\\CODE\\Cpp\\Computer-Program-Assignment\\asset\\data\\data.txt\""; // define command to open file in notepad
+const string export_path = "E:\\CODE\\Cpp\\Computer-Program-Assignment\\asset\\exportData\\";       // define data export path
+const string import_path = "E:\\CODE\\Cpp\\Computer-Program-Assignment\\asset\\importData\\";       // define data import path
+const string encrypt_key = "ehqmrD567";                                                             // admin@123
 
 using namespace std;
 

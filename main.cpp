@@ -2,8 +2,6 @@
 
 int main()
 {
-    readData(FILE_PATH, customers);
-    mainMenu();
-    system("pause");
+    login();
     return 0;
 }

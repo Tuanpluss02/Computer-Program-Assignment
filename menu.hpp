@@ -1,5 +1,5 @@
 #include "customer.cpp"
-
+#include <conio.h>
 using ConsoleTable = samilton::ConsoleTable;
 
 vector<Customer> customers;
@@ -7,6 +7,8 @@ vector<Customer> customers;
 using namespace std;
 
 void login();
+string encrypt(string password);
+void gotoXY(SHORT x, SHORT y);
 void searchByFreeText();
 void filterMenu();
 void filterBillMenu();
@@ -587,18 +589,56 @@ void exportMenu(vector<Customer> &Customers)
 
 void login()
 {
+    ConsoleTable table(1, 1, samilton::Alignment::left);
+    table[0][0](samilton::Alignment::centre) = "Welcome to the customer management system\nPlease enter your username and password to login";
+    table[1][0] = "Username: ";
+    table[2][0] = "Password: ";
+    cout << setw(40) << table;
+    gotoXY(55, 4);
     string username, password;
-    cout << "Enter username: ";
     cin >> username;
-    cout << "Enter password: ";
-    cin >> password;
-    if (username == "admin" && password == "admin")
+    getchar();
+    gotoXY(55, 6);
+    int x = 55;
+    size_t charr;
+    for (charr = 0; charr < 9; charr++)
     {
+        password += _getch();
+        gotoXY(x++, 6);
+        _putch('*');
+    }
+    if (username == "admin" && encrypt(password) == encrypt_key)
+    {
+        CLEAR_SCREEN;
+        cout << "Login successfully!" << endl;
+        readData(FILE_PATH, customers);
         mainMenu();
     }
     else
     {
-        cout << "Invalid username or password! Please try again!" << endl;
+        gotoXY(53, 8);
+        cout << "Login failed! Please try again!" << endl;
+        system("pause");
+        CLEAR_SCREEN;
         login();
     }
+}
+
+string encrypt(string password)
+{
+    // encrypt password using round shift with K = 4
+    string result = "";
+    for (int i = 0; i < password.length(); i++)
+    {
+        result += (char)(password[i] + 4) % 256;
+    }
+    return result;
+}
+
+void gotoXY(SHORT x, SHORT y)
+{
+    HANDLE hConsoleOutput;
+    COORD Cursor_an_Pos = {x, y};
+    hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+    SetConsoleCursorPosition(hConsoleOutput, Cursor_an_Pos);
 }
