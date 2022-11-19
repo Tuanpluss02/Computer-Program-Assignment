@@ -1,4 +1,0 @@
-ID                  Name                                    Email                         Phone                         Bill                          Gender    Address                                           
-4                   Ngo Van Tri                             jdja@amc.cm                   0983274872                    194,372,994 VND               Female    La Khe - Ha Noi                                   
-5                   Ngo Van Tri                             jdja@amc.cm                   0983274872                    194,372,994 VND               Female    La Khe - Ha Noi                                   
-12                  Ngo Van Tri                             jdja@amc.cm                   0983274872                    194,372,994 VND               Female    La Khe - Ha Noi                                   
