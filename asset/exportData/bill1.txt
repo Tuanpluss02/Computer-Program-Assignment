@@ -4,5 +4,4 @@ ID                  Name                                    Email               
 4                   Ngo Van Tri                             jdja@amc.cm                   0983274872                    194,372,994 VND               Female    La Khe - Ha Noi                                   
 5                   Hoang Thi Mai                           mai@ptit.com                  0937483274                    1,985,683,264 VND             Female    Quan 9 - Tp Ho Chi Minh                           
 6                   Luong Ngoc Tung                         ugguj@gmail.com               8421739318                    648,484,494 VND               Male      Gia Lam - Ha Noi                                  
-8                   Dao Cong Su                             sucowsjh@ptit.vn              0915253621                    435,438,525,023 VND           Male      Phung Khoang - Ha Dong - Ha Noi                   
 12                  Ngo Van Tri                             jdja@amc.cm                   0983274872                    194,372,994 VND               Female    La Khe - Ha Noi                                   

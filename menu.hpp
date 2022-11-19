@@ -27,7 +27,7 @@ void mainMenu()
     ConsoleTable table(1, 1, samilton::Alignment::left);
     table[0][0](samilton::Alignment::centre) = "Menu";
     table[1][0] = "[1] Add new customer\n[2] Delete customer\n[3] Edit customer\n[4] Search customer\n[5] Sort customer\n[6] Filter customer\n[7] Import data\n[8] Print all customer\n[9] Open data file\n[0] Exit";
-    table[2][0] = "          Made by Do Ngoc Tuan               ";
+    table[2][0] = "          Do Ngoc Tuan - B20DCVT330               ";
     cout << setw(40) << table;
     int choice;
     do
@@ -95,7 +95,7 @@ void searchMenu()
     ConsoleTable table(1, 1, samilton::Alignment::left);
     table[0][0](samilton::Alignment::centre) = "Search Menu";
     table[1][0] = "[1] Search by ID\n[2] Search by free text\n[3] Back to main menu\n[0] Exit";
-    table[2][0] = "           Made by Do Ngoc Tuan             ";
+    table[2][0] = "           Do Ngoc Tuan - B20DCVT330             ";
     cout << setw(40) << table;
     int choice;
     do
@@ -130,7 +130,7 @@ void subSortMenu(int choice1)
     ConsoleTable sortOption(1, 1, samilton::Alignment::left);
     sortOption[0][0](samilton::Alignment::centre) = "Sort Option";
     sortOption[1][0] = "[1] Ascending\n[2] Descending\n[3] Back to sort menu\n[4] Back to main menu";
-    sortOption[2][0] = "           Made by Do Ngoc Tuan             ";
+    sortOption[2][0] = "           Do Ngoc Tuan - B20DCVT330             ";
     cout << setw(40) << sortOption;
     int choice2;
     bool isAscending;
@@ -170,7 +170,7 @@ void afterDone(vector<Customer> &Customers)
     ConsoleTable table(1, 1, samilton::Alignment::left);
     table[0][0](samilton::Alignment::centre) = "Done!";
     table[1][0] = "[1] Print the result\n[2] Export the result\n[3] Print all customer\n[4] Open data file\n[5] Back to main menu\n[0] Exit";
-    table[2][0] = "           Made by Do Ngoc Tuan             ";
+    table[2][0] = "           Do Ngoc Tuan - B20DCVT330             ";
     cout << setw(40) << table;
     int choice;
     do
@@ -217,7 +217,7 @@ void sortMenu()
     ConsoleTable table(1, 1, samilton::Alignment::left);
     table[0][0](samilton::Alignment::centre) = "Sort Menu";
     table[1][0] = "[1] Sort by ID\n[2] Sort by name\n[3] Sort by bill\n[4] Back to main menu\n[0] Exit";
-    table[2][0] = "           Made by Do Ngoc Tuan             ";
+    table[2][0] = "           Do Ngoc Tuan - B20DCVT330             ";
     cout << setw(40) << table;
     int choice1;
     do
@@ -305,7 +305,7 @@ void filterMenu()
     ConsoleTable table(1, 1, samilton::Alignment::left);
     table[0][0](samilton::Alignment::centre) = "Filter Menu";
     table[1][0] = "[1] Filter by bill\n[2] Filter by gender\n[3] Back to main menu\n[0] Exit";
-    table[2][0] = "           Made by Do Ngoc Tuan             ";
+    table[2][0] = "           Do Ngoc Tuan - B20DCVT330             ";
     cout << setw(40) << table;
     int choice;
     do
@@ -341,7 +341,7 @@ void filterBillMenu()
     ConsoleTable table(1, 1, samilton::Alignment::left);
     table[0][0](samilton::Alignment::centre) = "Filter by bill";
     table[1][0] = "[1] Filter by bill equal to \n[2] Filter by bill greater than\n[3] Filter by bill less than\n[4] Filter by bill between\n[5] Back to filter menu\n[6] Back to main menu\n[0] Exit";
-    table[2][0] = "           Made by Do Ngoc Tuan             ";
+    table[2][0] = "           Do Ngoc Tuan - B20DCVT330             ";
     cout << setw(40) << table;
     int choice;
     string bill, start, end;
@@ -441,7 +441,7 @@ void filterGenderMenu()
     ConsoleTable table(1, 1, samilton::Alignment::left);
     table[0][0](samilton::Alignment::centre);
     table[1][0] = "[1] Filter by male\n[2] Filter by female\n[3] Back to filter menu\n[4] Back to main menu\n[0] Exit";
-    table[2][0] = "           Made by Do Ngoc Tuan             ";
+    table[2][0] = "           Do Ngoc Tuan - B20DCVT330             ";
     cout << setw(40) << table;
     vector<Customer> result;
     int choice;
