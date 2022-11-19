@@ -288,6 +288,59 @@ vector<Customer> searchCustomerRegex(vector<Customer> customers, string token)
     }
     return result;
 }
+vector<Customer> linearSearch(vector<Customer> customers, string token, int option)
+{
+    vector<Customer> result;
+    for (size_t i = 0; i < customers.size(); i++)
+    {
+        switch (option)
+        {
+        case 1:
+            if (customers[i].getID() == token)
+            {
+                result.push_back(customers[i]);
+            }
+            break;
+        case 2:
+            if (customers[i].getName() == token)
+            {
+                result.push_back(customers[i]);
+            }
+            break;
+        case 3:
+            if (customers[i].getEmail() == token)
+            {
+                result.push_back(customers[i]);
+            }
+            break;
+        case 4:
+            if (customers[i].getPhone() == token)
+            {
+                result.push_back(customers[i]);
+            }
+            break;
+        case 5:
+            if (customers[i].getBill() == token)
+            {
+                result.push_back(customers[i]);
+            }
+            break;
+        case 6:
+            if (customers[i].getGender() == token)
+            {
+                result.push_back(customers[i]);
+            }
+            break;
+        case 7:
+            if (customers[i].getAddress() == token)
+            {
+                result.push_back(customers[i]);
+            }
+            break;
+        }
+    }
+    return result;
+}
 
 long searchCustomerBinarySearch(vector<Customer> customers, size_t ID)
 {

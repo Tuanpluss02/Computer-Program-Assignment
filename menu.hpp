@@ -5,6 +5,8 @@ using ConsoleTable = samilton::ConsoleTable;
 vector<Customer> customers;
 
 using namespace std;
+
+void login();
 void searchByFreeText();
 void filterMenu();
 void filterBillMenu();
@@ -144,13 +146,13 @@ void subSortMenu(int choice1)
         isAscending = true;
         quickSort(customers, 0, customers.size() - 1, choice1, isAscending);
         saveData(FILE_PATH, customers);
-        afterDone();
+        afterDone(customers);
         break;
     case 2:
         isAscending = false;
         quickSort(customers, 0, customers.size() - 1, choice1, isAscending);
         saveData(FILE_PATH, customers);
-        afterDone();
+        afterDone(customers);
         break;
     case 3:
         sortMenu();
@@ -165,7 +167,7 @@ void afterDone(vector<Customer> &Customers)
 {
     ConsoleTable table(1, 1, samilton::Alignment::left);
     table[0][0](samilton::Alignment::centre) = "Done!";
-    table[1][0] = "[1] Print all customers\n[2] Open data file\n[3] Back to main menu\n[0] Exit";
+    table[1][0] = "[1] Print the result\n[2] Export the result\n[3] Print all customer\n[4] Open data file\n[5] Back to main menu\n[0] Exit";
     table[2][0] = "           Made by Do Ngoc Tuan             ";
     cout << setw(40) << table;
     int choice;
@@ -173,9 +175,9 @@ void afterDone(vector<Customer> &Customers)
     {
         cout << "Enter your choice: ";
         cin >> choice;
-        if (choice > 3 || choice < 0)
+        if (choice > 5 || choice < 0)
             cout << "Invalid choice! Please try again!" << endl;
-    } while (choice > 3 || choice < 0);
+    } while (choice > 5 || choice < 0);
     CLEAR_SCREEN;
     switch (choice)
     {
@@ -186,11 +188,20 @@ void afterDone(vector<Customer> &Customers)
         mainMenu();
         break;
     case 2:
+        exportMenu(Customers);
+        break;
+    case 3:
+        printAllCustomer(customers);
+        system("pause");
+        CLEAR_SCREEN;
+        mainMenu();
+        break;
+    case 4:
         system(CMD.c_str());
         cout << "File opened successfully!" << endl;
         mainMenu();
         break;
-    case 3:
+    case 5:
         mainMenu();
         break;
     default:
@@ -350,7 +361,7 @@ void filterBillMenu()
         }
         system("pause");
         CLEAR_SCREEN;
-        afterDone();
+        afterDone(result);
         break;
     case 2:
         cout << "Enter bill to filter: ";
@@ -366,7 +377,7 @@ void filterBillMenu()
         }
         system("pause");
         CLEAR_SCREEN;
-        afterDone();
+        afterDone(result);
         break;
     case 3:
         cout << "Enter bill to filter: ";
@@ -382,7 +393,7 @@ void filterBillMenu()
         }
         system("pause");
         CLEAR_SCREEN;
-        afterDone();
+        afterDone(result);
         break;
     case 4:
         cout << "Enter start bill: ";
@@ -400,7 +411,7 @@ void filterBillMenu()
         }
         system("pause");
         CLEAR_SCREEN;
-        afterDone();
+        afterDone(result);
         break;
     case 5:
         filterMenu();
@@ -436,7 +447,7 @@ void filterGenderMenu()
     switch (choice)
     {
     case 1:
-        result = searchCustomerRegex(customers, "Male");
+        result = linearSearch(customers, "Male", 6);
         if (result.size() == 0)
         {
             cout << "No result found!" << endl;
@@ -447,7 +458,7 @@ void filterGenderMenu()
         }
         system("pause");
         CLEAR_SCREEN;
-        afterDone();
+        afterDone(result);
         break;
     case 2:
         result = searchCustomerRegex(customers, "Female");
@@ -461,7 +472,7 @@ void filterGenderMenu()
         }
         system("pause");
         CLEAR_SCREEN;
-        afterDone();
+        afterDone(result);
         break;
     case 3:
         filterMenu();
@@ -476,9 +487,8 @@ void filterGenderMenu()
 }
 void importMenu(vector<Customer> &Customers)
 {
-    string path = "E:\\CODE\\Cpp\\Computer-Program-Assignment\\asset";
     vector<string> rawData, files;
-    for (const auto &entry : fs::directory_iterator(path))
+    for (const auto &entry : fs::directory_iterator(import_path))
         rawData.push_back(entry.path().string());
     for (auto file : rawData)
     {
@@ -535,14 +545,13 @@ void importMenu(vector<Customer> &Customers)
     } while (choice != 'Y' && choice != 'y' && choice != 'N' && choice != 'n');
     CLEAR_SCREEN;
     importData(fileName, Customers, isReplace);
-    afterDone();
+    afterDone(Customers);
 }
 
 void exportMenu(vector<Customer> &Customers)
 {
-    string path = "E:\\CODE\\Cpp\\Computer-Program-Assignment\\asset";
     vector<string> rawData, files;
-    for (const auto &entry : fs::directory_iterator(path))
+    for (const auto &entry : fs::directory_iterator(export_path))
         rawData.push_back(entry.path().string());
     for (auto file : rawData)
     {
@@ -574,4 +583,22 @@ void exportMenu(vector<Customer> &Customers)
     saveData(fileName, Customers);
     cout << "Export successfully! The file is saved at " << export_path << endl;
     afterDone(Customers);
+}
+
+void login()
+{
+    string username, password;
+    cout << "Enter username: ";
+    cin >> username;
+    cout << "Enter password: ";
+    cin >> password;
+    if (username == "admin" && password == "admin")
+    {
+        mainMenu();
+    }
+    else
+    {
+        cout << "Invalid username or password! Please try again!" << endl;
+        login();
+    }
 }

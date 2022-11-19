@@ -13,10 +13,11 @@
 using ConsoleTable = samilton::ConsoleTable; // define alias
 namespace fs = std::filesystem;
 
-#define CLEAR_SCREEN system("cls")                                                     // define clear screen
-const string FILE_PATH = "E:\\CODE\\Cpp\\Computer-Program-Assignment\\data.txt";       // define file path
-const string CMD = "notepad \"E:\\CODE\\Cpp\\Computer-Program-Assignment\\data.txt\""; // define command to open file in notepad
-const string export_path = "E:\\CODE\\Cpp\\Computer-Program-Assignment\\asset\\";      // define data export path
+#define CLEAR_SCREEN system("cls")                                                            // define clear screen
+const string FILE_PATH = "E:\\CODE\\Cpp\\Computer-Program-Assignment\\data\\data.txt";        // define file path
+const string CMD = "notepad \"E:\\CODE\\Cpp\\Computer-Program-Assignment\\data\\data.txt\"";  // define command to open file in notepad
+const string export_path = "E:\\CODE\\Cpp\\Computer-Program-Assignment\\asset\\exportData\\"; // define data export path
+const string import_path = "E:\\CODE\\Cpp\\Computer-Program-Assignment\\asset\\importData\\"; // define data import path
 
 using namespace std;
 
@@ -65,11 +66,11 @@ int partitionAsccending(vector<Customer> &customers, int left, int right, int op
 int partitionDescending(vector<Customer> &customers, int left, int right, int option);    // partition for quick sort to sort in descending order
 
 //============== SEARCH FUNCTIONS ==============
-long searchCustomer(vector<Customer> &customers, string token, int option);     // search customer by ID or free text
-vector<Customer> searchCustomerRegex(vector<Customer> customers, string token); // search customer by regex
-long searchCustomerBinarySearch(vector<Customer> customers, size_t ID);         // search customer by binary search
-long searchCustomerFibonacciSearch(vector<Customer> customers, size_t ID);      // search customer by linear search
-
+long searchCustomer(vector<Customer> &customers, string token, int option);          // search customer by ID or free text
+vector<Customer> searchCustomerRegex(vector<Customer> customers, string token);      // search customer by regex
+long searchCustomerBinarySearch(vector<Customer> customers, size_t ID);              // search customer by binary search
+long searchCustomerFibonacciSearch(vector<Customer> customers, size_t ID);           // search customer by linear search
+vector<Customer> linearSearch(vector<Customer> customers, string token, int option); // search customer by linear search
 //============== MAIN FEATURES ==============
 void deleteCustomer(vector<Customer> &customers); // delete customer
 void addCustomer(vector<Customer> &customers);    // add customer
