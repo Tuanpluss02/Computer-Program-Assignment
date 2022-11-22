@@ -9,6 +9,7 @@ using namespace std;
 void login();
 string encrypt(string password);
 void gotoXY(SHORT x, SHORT y);
+void SetColor(WORD color);
 void searchByFreeText();
 void filterMenu();
 void filterBillMenu();
@@ -36,7 +37,9 @@ void mainMenu()
         cin >> choice;
         if (choice < 0 || choice > 9)
         {
+            SetColor(4);
             cout << "Invalid choice! Please enter again!" << endl;
+            SetColor(7);
         }
     } while (choice < 0 || choice > 9);
     CLEAR_SCREEN;
@@ -80,7 +83,9 @@ void mainMenu()
         break;
     case 9:
         system(CMD.c_str());
+        SetColor(2);
         cout << "File opened successfully!" << endl;
+        SetColor(7);
         mainMenu();
         break;
 
@@ -104,7 +109,9 @@ void searchMenu()
         cin >> choice;
         if (choice < 0 || choice > 8)
         {
+            SetColor(4);
             cout << "Invalid choice! Please enter again!" << endl;
+            SetColor(7);
         }
     } while (choice < 0 || choice > 8);
     CLEAR_SCREEN;
@@ -139,7 +146,12 @@ void subSortMenu(int choice1)
         cout << "Enter your choice: ";
         cin >> choice2;
         if (choice2 > 3 || choice2 < 1)
+        {
+            SetColor(4);
             cout << "Invalid choice! Please try again!" << endl;
+            SetColor(7);
+        }
+
     } while (choice2 > 3 || choice2 < 1);
     CLEAR_SCREEN;
     switch (choice2)
@@ -178,7 +190,12 @@ void afterDone(vector<Customer> &Customers)
         cout << "Enter your choice: ";
         cin >> choice;
         if (choice > 5 || choice < 0)
+        {
+            SetColor(4);
             cout << "Invalid choice! Please try again!" << endl;
+            SetColor(7);
+        }
+
     } while (choice > 5 || choice < 0);
     CLEAR_SCREEN;
     switch (choice)
@@ -200,7 +217,9 @@ void afterDone(vector<Customer> &Customers)
         break;
     case 4:
         system(CMD.c_str());
+        SetColor(2);
         cout << "File opened successfully!" << endl;
+        SetColor(7);
         mainMenu();
         break;
     case 5:
@@ -226,8 +245,9 @@ void sortMenu()
         cin >> choice1;
         if (choice1 < 0 || choice1 > 4)
         {
+            SetColor(4);
             cout << "Invalid choice! Please try again!" << endl;
-            continue;
+            SetColor(7);
         }
     } while (choice1 < 0 || choice1 > 4);
     CLEAR_SCREEN;
@@ -254,7 +274,9 @@ void searchByFreeText()
     vector<Customer> res = searchCustomerRegex(customers, keyword);
     if (res.size() == 0)
     {
+        SetColor(4);
         cout << "No result found!" << endl;
+        SetColor(7);
         system("pause");
         CLEAR_SCREEN;
         searchMenu();
@@ -278,7 +300,11 @@ void searchByID()
         cin >> id;
         isValidId = isValidID(id);
         if (!isValidId)
+        {
+            SetColor(4);
             cout << "Invalid ID! Please try again!" << endl;
+            SetColor(7);
+        }
         else
             break;
 
@@ -286,7 +312,9 @@ void searchByID()
     long index = searchCustomer(customers, id, 1);
     if (index == -1)
     {
+        SetColor(4);
         cout << "Not found!" << endl;
+        SetColor(7);
         system("pause");
         CLEAR_SCREEN;
         searchMenu();
@@ -314,8 +342,9 @@ void filterMenu()
         cin >> choice;
         if (choice < 0 || choice > 3)
         {
+            SetColor(4);
             cout << "Invalid choice! Please try again!" << endl;
-            continue;
+            SetColor(7);
         }
     } while (choice < 0 || choice > 3);
     CLEAR_SCREEN;
@@ -352,8 +381,9 @@ void filterBillMenu()
         cin >> choice;
         if (choice < 0 || choice > 6)
         {
+            SetColor(4);
             cout << "Invalid choice! Please try again!" << endl;
-            continue;
+            SetColor(7);
         }
     } while (choice < 0 || choice > 6);
     CLEAR_SCREEN;
@@ -365,7 +395,9 @@ void filterBillMenu()
         result = filterBill(customers, bill, 1);
         if (result.size() == 0)
         {
+            SetColor(4);
             cout << "No result found!" << endl;
+            SetColor(7);
         }
         else
         {
@@ -381,7 +413,9 @@ void filterBillMenu()
         result = filterBill(customers, bill, 2);
         if (result.size() == 0)
         {
+            SetColor(4);
             cout << "No result found!" << endl;
+            SetColor(7);
         }
         else
         {
@@ -397,7 +431,9 @@ void filterBillMenu()
         result = filterBill(customers, bill, 3);
         if (result.size() == 0)
         {
+            SetColor(4);
             cout << "No result found!" << endl;
+            SetColor(7);
         }
         else
         {
@@ -415,7 +451,9 @@ void filterBillMenu()
         result = filterBill(customers, stringToNumber(start), stringToNumber(end));
         if (result.size() == 0)
         {
+            SetColor(4);
             cout << "No result found!" << endl;
+            SetColor(7);
         }
         else
         {
@@ -451,8 +489,9 @@ void filterGenderMenu()
         cin >> choice;
         if (choice < 0 || choice > 4)
         {
+            SetColor(4);
             cout << "Invalid choice! Please try again!" << endl;
-            continue;
+            SetColor(7);
         }
     } while (choice < 0 || choice > 4);
     CLEAR_SCREEN;
@@ -462,7 +501,9 @@ void filterGenderMenu()
         result = linearSearch(customers, "Male", 6);
         if (result.size() == 0)
         {
+            SetColor(4);
             cout << "No result found!" << endl;
+            SetColor(7);
         }
         else
         {
@@ -476,7 +517,9 @@ void filterGenderMenu()
         result = searchCustomerRegex(customers, "Female");
         if (result.size() == 0)
         {
+            SetColor(4);
             cout << "No result found!" << endl;
+            SetColor(7);
         }
         else
         {
@@ -527,7 +570,9 @@ void importMenu(vector<Customer> &Customers)
         cin >> selection;
         if (selection < 1 || selection > files.size())
         {
+            SetColor(4);
             cout << "Invalid choice! Please try again!" << endl;
+            SetColor(7);
         }
     } while (selection < 1 || selection > files.size());
     fileName = export_path + files[selection - 1];
@@ -539,8 +584,9 @@ void importMenu(vector<Customer> &Customers)
         cin >> choice;
         if (choice != 'Y' && choice != 'y' && choice != 'N' && choice != 'n')
         {
+            SetColor(4);
             cout << "Invalid choice! Please try again!" << endl;
-            continue;
+            SetColor(7);
         }
         else
         {
@@ -582,7 +628,9 @@ void exportMenu(vector<Customer> &Customers)
         if (find(files.begin(), files.end(), fileName) != files.end())
         {
             isExist = true;
+            SetColor(4);
             cout << "File is exsit! Please try again!" << endl;
+            SetColor(7);
             continue;
         }
         else
@@ -592,7 +640,9 @@ void exportMenu(vector<Customer> &Customers)
     } while (isExist);
     fileName = export_path + fileName;
     saveData(fileName, Customers);
+    SetColor(2);
     cout << "Export successfully! The file is saved at " << export_path << endl;
+    SetColor(7);
     afterDone(Customers);
 }
 
@@ -619,14 +669,18 @@ void login()
     if (username == "admin" && encrypt(password) == encrypt_key)
     {
         CLEAR_SCREEN;
+        SetColor(2);
         cout << "Login successfully!" << endl;
+        SetColor(7);
         readData(FILE_PATH, customers);
         mainMenu();
     }
     else
     {
         gotoXY(53, 8);
+        SetColor(4);
         cout << "Login failed! Please try again!" << endl;
+        SetColor(7);
         system("pause");
         CLEAR_SCREEN;
         login();
@@ -650,4 +704,20 @@ void gotoXY(SHORT x, SHORT y)
     COORD Cursor_an_Pos = {x, y};
     hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
     SetConsoleCursorPosition(hConsoleOutput, Cursor_an_Pos);
+}
+
+void SetColor(WORD color)
+{
+    HANDLE hConsoleOutput;
+    hConsoleOutput = GetStdHandle(STD_OUTPUT_HANDLE);
+
+    CONSOLE_SCREEN_BUFFER_INFO screen_buffer_info;
+    GetConsoleScreenBufferInfo(hConsoleOutput, &screen_buffer_info);
+
+    WORD wAttributes = screen_buffer_info.wAttributes;
+    color &= 0x000f;
+    wAttributes &= 0xfff0;
+    wAttributes |= color;
+
+    SetConsoleTextAttribute(hConsoleOutput, wAttributes);
 }
