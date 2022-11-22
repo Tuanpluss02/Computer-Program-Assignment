@@ -22,16 +22,31 @@ After login you will be presented with a menu. You can choose the number of the 
 
 ## Screenshots
  - Login Menu
+ 
+ ![WindowsTerminal_LR8Xd0WaK7](https://user-images.githubusercontent.com/82562559/203308836-cbd0d702-a410-48cd-9465-19ab1e5e95a8.gif)
+
 
  - Main Menu
+ 
+![image](https://user-images.githubusercontent.com/82562559/203309018-c0cd2b84-aafd-43dc-a0d1-19530c98ee1a.png)
 
  - Search Menu
  
+ ![WindowsTerminal_PS5OqvU56z](https://user-images.githubusercontent.com/82562559/203309413-9d8eeb27-a89d-4d46-b0b9-54f2589343b5.gif)
+
  - Sort Menu
+ 
+![WindowsTerminal_JJXCY5m6c1](https://user-images.githubusercontent.com/82562559/203309682-6bc68909-674e-4d48-a71c-5cd4e49736ea.gif)
 
  - Filter Menu
 
+![WindowsTerminal_KYGJD57fcd](https://user-images.githubusercontent.com/82562559/203309991-d2d87adc-4ca2-4b01-8446-8926e80213ef.gif)
+
+
  - Import Menu
+ 
+ ![WindowsTerminal_t0j0lVIzte](https://user-images.githubusercontent.com/82562559/203310169-5fd1d732-ebd6-44bf-a847-b966411141ff.gif)
+
 
  ## Prerequisites
  - C++ Language
