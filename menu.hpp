@@ -575,7 +575,7 @@ void importMenu(vector<Customer> &Customers)
             SetColor(7);
         }
     } while (selection < 1 || selection > files.size());
-    fileName = export_path + files[selection - 1];
+    fileName = import_path + files[selection - 1];
     cout << "Do you want to replace current data? (Y/N): ";
     char choice;
     bool isReplace = false;

@@ -1,8 +1,7 @@
 ID                  Name                                    Email                         Phone                         Bill                          Gender    Address                                           
-2                   Nhu Hong Thai                           thaiu@gdad.com                0916718763                    100,000,000 VND               Female    Van Quan - Ha Noi                                 
-3                   Pham Thi Huyen                          fdskhj@gmail.com              0973786474                    100,000,000 VND               Male      My Dinh - Ha Noi                                  
-4                   Ngo Van Tri                             jdja@amc.cm                   0983274872                    194,372,994 VND               Female    La Khe - Ha Noi                                   
-5                   Hoang Thi Mai                           mai@ptit.com                  0937483274                    1,985,683,264 VND             Female    Quan 9 - Tp Ho Chi Minh                           
-6                   Luong Ngoc Tung                         ugguj@gmail.com               8421739318                    648,484,494 VND               Male      Gia Lam - Ha Noi                                  
-8                   Dao Cong Su                             sucowsjh@ptit.vn              0915253621                    435,438,525,023 VND           Male      Phung Khoang - Ha Dong - Ha Noi                   
-12                  Ngo Van Tri                             jdja@amc.cm                   0983274872                    194,372,994 VND               Female    La Khe - Ha Noi                                   
+5                   Hoang Thi Mai                           mai@ptit.com                  0937483274                    600,000,000 VND               Female    Quan 9 - Tp Ho Chi Minh                           
+4                   Dao Cong Su                             sucowsjh@ptit.vn              0915253621                    500,000,000 VND               Male      Phung Khoang - Ha Dong - Ha Noi                   
+7                   Dao Minh Son                            son@otani.vn                  0987463764                    250,000,000 VND               Male      Thanh Xuan - Ha Noi                               
+6                   Pham Thi Huyen                          fdskhj@gmail.com              0973786474                    200,000,000 VND               Male      My Dinh - Ha Noi                                  
+2                   Ngo Van Tri                             trinoi@gmail.cm               0983274872                    150,000,000 VND               Female    La Khe - Ha Noi                                   
+1                   Luong Ngoc Tung                         ugguj@gmail.com               8421739318                    100,000,000 VND               Male      Gia Lam - Ha Noi                                  
